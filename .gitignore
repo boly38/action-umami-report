@@ -1,0 +1,10 @@
+#Intellij
+.idea/
+*.iml
+
+# NodeJs
+node_modules/
+
+# dont push
+*.dontpush.*
+umamiReport.md
