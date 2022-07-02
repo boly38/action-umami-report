@@ -1,0 +1,10 @@
+#Intellij
+.idea/
+*.iml
+
+# github actions require node_modules too
+# https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+
+# dont push
+*.dontpush.*
+umamiReport.md

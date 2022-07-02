@@ -1,0 +1,19 @@
+name: Create Umami report
+description: Produce umamiReport.md from umami site last 24h stats
+author: boly38
+inputs:
+  umami-server:
+    description: The umami server instance.
+    required: true
+  umami-user:
+    description: The umami server instance user
+    required: true
+  umami-password:
+    description: The umami server instance password
+    required: true
+  umami-site-domain:
+    description: The umami site domain name
+    required: false
+runs:
+  using: node16
+  main: main.js
