@@ -30,7 +30,7 @@ The umami report for last 24h.
 
 ```yaml
 - name: Create Umami report
-  uses: boly38/action-umami-report@v1
+  uses: boly38/action-umami-report@stable
   with:
     umami-server: ${{secrets.UMAMI_SERVER}}
     umami-user: ${{secrets.UMAMI_USERNAME}}
