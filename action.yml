@@ -13,7 +13,12 @@ inputs:
     required: true
   umami-site-domain:
     description: The umami site domain name
+    default: '*first*'
     required: false
+  umami-report-file:
+    description: The umami report file to produce (skipped if empty)
+    required: false
+    default: ''
 runs:
   using: node16
   main: main.js

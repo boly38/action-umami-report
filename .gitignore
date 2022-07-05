@@ -8,3 +8,4 @@
 # dont push
 *.dontpush.*
 umamiReport.md
+umami/

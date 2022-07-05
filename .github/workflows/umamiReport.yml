@@ -2,7 +2,7 @@ name: umami-report
 
 on:
   schedule:
-    - cron: '0 10 * * *'
+    - cron: '30 17 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -11,18 +11,26 @@ jobs:
     name: umami report example
     runs-on: ubuntu-latest
 
+    outputs:
+      umami_page_views: ${{ steps.umamiReport.outputs.pageViews }}
+      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
+      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
     steps:
       - name: Create Umami report
+        id: umamiReport
         uses: boly38/action-umami-report@stable
         with:
           umami-server: ${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
           umami-password: ${{secrets.UMAMI_PASSWORD}}
           umami-site-domain: ${{secrets.UMAMI_SIDE_DOMAIN}}
+          umami-report-file: 'umamiReport.md'
 
       - name: Send Umami report to discord channel
-        uses: sinshutu/upload-to-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK }}
+        uses: appleboy/discord-action@master
         with:
-          args: umamiReport.md
+          webhook_id: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_TOKEN }}
+          color: "#48f442"
+          username: "umami report"
+          message: ${{ env.umamiOneLineReport }}
