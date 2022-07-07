@@ -34,3 +34,8 @@ jobs:
           color: "#48f442"
           username: "umami report"
           message: ${{ env.umamiOneLineReport }}
+
+      - name: Have a look at generated file
+        run: |
+          echo ${{ env.umamiReportFile }}"
+          ls -la ${{ env.umamiReportFile }}"
