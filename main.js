@@ -25,7 +25,7 @@ const actionUmamiReport = async function() {
       }
       // printContext();
       const reportResult = await action.umamiDailyReportV0(umamiServer, umamiUser, umamiPassword, umamiSiteDomain, umamiReportFile).catch(rethrow);
-      if (reportResult.targetFile !== null) {
+      if ('targetFile' in reportResult) {
         core.info(`Generated : ${reportResult.targetFile}`);
       }
     } catch (error) {
