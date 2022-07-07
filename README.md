@@ -1,6 +1,6 @@
 # action-umami-report
 
-This [action](./action.yml) prints daily umami report into a given file
+This [action](./action.yml) prints daily umami report into a given file, and produce action outputs/env.
 
 ## Inputs
 
