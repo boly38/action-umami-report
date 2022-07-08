@@ -70,7 +70,7 @@ Full working sample: cf. [umamiReport.yml](.github/workflows/umamiReport.yml)
 # See also
 
 ## Umami
-- Umami [API](https://umami.is/docs/api) - [Source](https://github.com/umami-software/umami)
+- Umami [API](https://umami.is/docs/api) ([API client](https://github.com/boly38/umami-api-client))- [Source](https://github.com/umami-software/umami)
 
 ## possible next step
 - send the report [by email](https://github.com/dawidd6/action-send-mail), on [discord](https://github.com/marketplace/actions/upload-to-discord), etc..
