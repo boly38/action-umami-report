@@ -42,7 +42,7 @@ jobs:
           ls -la "${{ env.umamiReportFile }}"
 
   nextJob:
-    needs: umamiReport
+    needs: umamiReportJob
     name: github action next job
     runs-on: ubuntu-latest
     steps:
