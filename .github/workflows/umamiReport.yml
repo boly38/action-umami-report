@@ -7,17 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  umamiReport:
+  umamiReportJob:
     name: umami report example
     runs-on: ubuntu-latest
 
     outputs:
-      umami_page_views: ${{ steps.umamiReport.outputs.pageViews }}
-      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
-      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
+      umami_page_views: ${{ steps.umamiReportStep.outputs.pageViews }}
+      umami_report_file: ${{ steps.umamiReportStep.outputs.umamiReportFile }}
+#      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
+#      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
     steps:
       - name: Create Umami report
-        id: umamiReport
+        id: umamiReportStep
         uses: boly38/action-umami-report@stable
         with:
           umami-server: ${{secrets.UMAMI_SERVER}}
@@ -35,7 +36,16 @@ jobs:
           username: "umami report"
           message: ${{ env.umamiOneLineReport }}
 
-      - name: Have a look at generated file
+      - name: Have a look at !secret results from next step using env
         run: |
-          echo ${{ env.umamiReportFile }}"
-          ls -la ${{ env.umamiReportFile }}"
+          echo "${{ env.umamiReportFile }}"
+          ls -la "${{ env.umamiReportFile }}"
+
+  nextJob:
+    needs: umamiReport
+    name: github action next job
+    runs-on: ubuntu-latest
+    steps:
+      - name: print var
+        run: |
+          echo "FROM umamiReport outputs: ${{ needs.umamiReportJob.outputs.umami_report_file }} and ${{ needs.umamiReportJob.outputs.umami_page_views }} "
