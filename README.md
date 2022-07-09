@@ -1,6 +1,6 @@
 # action-umami-report
 
-This [action](./action.yml) prints daily umami report into a given file, and produce action outputs/env.
+This [action](./action.yml) prints daily umami report into a given file, and produce action outputs.
 
 ## Inputs
 
@@ -19,8 +19,8 @@ Note: [Umami API](https://umami.is/docs/api) expected to be available at `<umami
 This action produces some "action results" where an action result is a `resultName`, and a `resultValue`.
 
 Each action result is available :
-- as [output](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `job`
-- as [environment variable name](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable) ; to use within same job in following `job step`
+- as [output](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
+
 
 ## Action results
 | resultName           | resultValue          | description                     |
@@ -41,10 +41,6 @@ jobs:
     name: umami report example
     runs-on: ubuntu-latest
 
-    outputs:
-      umami_page_views: ${{ steps.umamiReport.outputs.pageViews }}
-      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
-      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
     steps:
       - name: Create Umami report
         id: umamiReport
@@ -63,7 +59,7 @@ jobs:
           webhook_token: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_TOKEN }}
           color: "#48f442"
           username: "umami report"
-          message: ${{ env.umamiOneLineReport }}
+          message: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
 ```
 Full working sample: cf. [umamiReport.yml](.github/workflows/umamiReport.yml)
 

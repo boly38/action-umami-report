@@ -25,7 +25,7 @@ jobs:
           umami-user: ${{secrets.UMAMI_USERNAME}}
           umami-password: ${{secrets.UMAMI_PASSWORD}}
           umami-site-domain: ${{secrets.UMAMI_SIDE_DOMAIN}}
-          umami-report-file: 'umamiReport.md'
+          umami-report-file: 'umamiReport.txt'
 
       - name: Send Umami report to discord channel
         uses: appleboy/discord-action@master
@@ -34,12 +34,13 @@ jobs:
           webhook_token: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_TOKEN }}
           color: "#48f442"
           username: "umami report"
-          message: ${{ env.umamiOneLineReport }}
+          file: ${{ steps.umamiReport.outputs.umamiReportFile }}
+          message: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
 
-      - name: Have a look at !secret results from next step using env
+      - name: Have a look at !secret results from next step using outputs
         run: |
-          echo "${{ env.umamiReportFile }}"
-          ls -la "${{ env.umamiReportFile }}"
+          echo "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
+          ls -la "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
 
   nextJob:
     needs: umamiReportJob
