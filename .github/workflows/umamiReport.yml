@@ -34,7 +34,7 @@ jobs:
           webhook_token: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_TOKEN }}
           color: "#48f442"
           username: "umami report"
-          message: ${{ steps.umamiReport.outputs.umamiReport }}
+          message: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
 
       - name: Have a look at !secret results from next step using outputs
         run: |
