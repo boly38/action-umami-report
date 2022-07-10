@@ -7,6 +7,7 @@ var umamiUser = core.getInput('umami-user', { required: true });
 const umamiPassword = core.getInput('umami-password', { required: true });
 const umamiSiteDomain = core.getInput('umami-site-domain');// *first*
 const umamiReportFile = core.getInput('umami-report-file');// ''
+const umamiReportContent = core.getInput('umami-report-content');// 'pageviews|events|urls'
 const rethrow = (err) => {throw err;};
 
 const printContext = () => {
@@ -24,7 +25,8 @@ const actionUmamiReport = async function() {
         umamiUser = 'admin';
       }
       // printContext();
-      const reportResult = await action.umamiDailyReportV0(umamiServer, umamiUser, umamiPassword, umamiSiteDomain, umamiReportFile).catch(rethrow);
+      const reportResult = await action.umamiDailyReportV0(umamiServer, umamiUser, umamiPassword, umamiSiteDomain,
+         umamiReportFile, umamiReportContent).catch(rethrow);
       if ('targetFile' in reportResult) {
         core.info(`Generated : ${reportResult.targetFile}`);
       }

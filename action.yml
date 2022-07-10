@@ -1,5 +1,5 @@
 name: Create Umami report
-description: Produce umamiReport.md from umami site last 24h stats
+description: Produce an umamiReport and outputs from umami website last 24h period
 author: boly38
 inputs:
   umami-server:
@@ -19,6 +19,10 @@ inputs:
     description: The umami report file to produce (skipped if empty)
     required: false
     default: ''
+  umami-report-content:
+    description: The umami report content to produce
+    required: false
+    default: 'pageviews|events|urls'
 runs:
   using: node16
   main: main.js
