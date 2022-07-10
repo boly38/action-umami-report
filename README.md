@@ -4,24 +4,25 @@ This [action](./action.yml) prints daily umami report into a given file, and pro
 
 ## Inputs
 
-| input name          | required | description                                                                                       |
-|---------------------|----------|---------------------------------------------------------------------------------------------------|
-| `umami-server`      | yes      | The umami server instance. Example `"https://umami.mysite.com"`.                                  |
-| `umami-user`        | yes      | Umami API user. Default `"admin"`.                                                                | 
-| `umami-password`    | yes      | Umami API password.                                                                               | 
-| `umami-site-domain` | no       | Umami site domain name.  Example `"www.mysite.com"`. Default `*first*`: select first domain name. | 
-| `umami-report-file` | no       | Umami report file to generate.                                                                    | 
+| input name             | required | description                        |
+|------------------------|----------|------------------------------------|
+| `umami-server`         | yes      | The umami server instance.         |
+| `umami-user`           | yes      | Umami API user. Default `"admin"`. | 
+| `umami-password`       | yes      | Umami API password.                | 
+| `umami-site-domain`    | no       | Umami site domain name.            | 
+| `umami-report-file`    | no       | Umami report file to generate.     | 
+| `umami-report-content` | no       | Report content to generate.        | 
 
-Note: [Umami API](https://umami.is/docs/api) expected to be available at `<umami-server>/api/auth/login`.
+- [Umami API](https://umami.is/docs/api) expected to be available at `<umami-server>/api/auth/login`.
+- `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
+- `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
 
-# Outputs
+## Action outputs
 
 This action produces some "action results" where an action result is a `resultName`, and a `resultValue`.
 
-Each action result is available as [output](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
+Each action result is available as [output parameter](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
 
-
-## Action results
 | resultName           | resultValue        | description                     |
 |----------------------|--------------------|---------------------------------|
 | `pageViews`          | integer            | number of pageView in last 24h  |
