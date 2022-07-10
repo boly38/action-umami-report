@@ -18,16 +18,16 @@ Note: [Umami API](https://umami.is/docs/api) expected to be available at `<umami
 
 This action produces some "action results" where an action result is a `resultName`, and a `resultValue`.
 
-Each action result is available :
-- as [output](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
+Each action result is available as [output](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
 
 
 ## Action results
-| resultName           | resultValue          | description                     |
-|----------------------|----------------------|---------------------------------|
-| `pageViews`          | integer              | number of pageView in last 24h  |
-| `umamiOneLineReport` | string               | short summary of domain stats   | 
-| `umamiReport`        | multi-lines string   | detailed report of domain stats | 
+| resultName           | resultValue        | description                     |
+|----------------------|--------------------|---------------------------------|
+| `pageViews`          | integer            | number of pageView in last 24h  |
+| `umamiOneLineReport` | string             | short summary of domain stats   | 
+| `umamiReport`        | multi-lines string | detailed report of domain stats | 
+| `umamiReportLength`  | int                | v1.2, detailed report length    | 
 
 ## Action generated file
 
@@ -49,17 +49,14 @@ jobs:
           umami-server: ${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
           umami-password: ${{secrets.UMAMI_PASSWORD}}
-          umami-site-domain: ${{secrets.UMAMI_SIDE_DOMAIN}}
+          umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
           umami-report-file: 'umamiReport.md'
 
       - name: Send Umami report to discord channel
-        uses: appleboy/discord-action@master
+        uses: tsickert/discord-webhook@v4.0.0
         with:
-          webhook_id: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_ID }}
-          webhook_token: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_TOKEN }}
-          color: "#48f442"
-          username: "umami report"
-          message: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
+          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
+          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
 ```
 Full working sample: cf. [umamiReport.yml](.github/workflows/umamiReport.yml)
 
@@ -69,7 +66,7 @@ Full working sample: cf. [umamiReport.yml](.github/workflows/umamiReport.yml)
 - Umami [API](https://umami.is/docs/api) ([API client](https://github.com/boly38/umami-api-client))- [Source](https://github.com/umami-software/umami)
 
 ## possible next step
-- send the report [by email](https://github.com/dawidd6/action-send-mail), on [discord](https://github.com/marketplace/actions/upload-to-discord), etc..
+- send the report [by email](https://github.com/marketplace?type=actions&query=mail+), on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
 
 # How to contribute
 You're not a dev ? just submit an issue (bug, improvements, questions). 
