@@ -1,5 +1,8 @@
 name: Create Umami report
 description: Produce an umamiReport and outputs from umami website last 24h period
+branding:
+  icon: bar-chart
+  color: green
 author: boly38
 inputs:
   umami-server:
