@@ -15,9 +15,17 @@ const actionUmamiReport = async function() {
       if (UMAMI_SERVER === null) {
         throw "please setup your environment UMAMI_SERVER, UMAMI_USER, UMAMI_PASSWORD, UMAMI_SITE_DOMAIN"
       }
-      const reportResult = await action.umamiDailyReportV0(UMAMI_SERVER, UMAMI_USER, UMAMI_PASSWORD, UMAMI_SITE_DOMAIN,
-                UMAMI_REPORT_FILE, UMAMI_REPORT_CONTENT)
-                                       .catch(rethrow);
+      var options = {};
+      options.server = UMAMI_SERVER;
+      options.user = UMAMI_USER;
+      options.password = UMAMI_PASSWORD;
+      options.domain = UMAMI_SITE_DOMAIN;
+      options.outputFile = UMAMI_REPORT_FILE;
+      options.reportContent = UMAMI_REPORT_CONTENT;
+      options.period = '24h';
+      options.unit = 'hour';
+      options.tz = 'Europe/Paris';
+      const reportResult = await action.umamiReport(options).catch(rethrow);
       if ('targetFile' in reportResult) {
         console.info(`Generated : ${reportResult.targetFile}`);
       }

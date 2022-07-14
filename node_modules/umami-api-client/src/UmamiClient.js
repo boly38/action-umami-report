@@ -50,7 +50,7 @@ class UmamiClient {
     return sitesData.find( d => d.domain === siteDomain );
   }
 
-  async getWebSiteDataForAPeriod(authData, siteData, dataDescription = 'stats', dataPath = '/stats', period ='24h', options = {}) {
+  async getWebSiteDataForAPeriod(authData, siteData, dataDescription = 'stats', dataPath = '/stats', period = '24h', options = {}) {
     givenAuthAndSiteData(authData, siteData);
     const queryOptions = enrichOptionsWithPeriod(options, period);
     const siteDataUrl = this.server+ `/api/website/${siteData.website_id}${dataPath}?` + queryString.stringify(queryOptions);
@@ -63,23 +63,47 @@ class UmamiClient {
   }
 
   // GET /api/website/{id}/stats
+  /*
+   * @deprecated : please use getStats(...)
+   */
   async getStatsForLast24h(authData, siteData) {
-    return await this.getWebSiteDataForAPeriod(authData, siteData, 'stats', '/stats');
+    return await this.getStats(authData, siteData);
+  }
+  async getStats(authData, siteData, period = '24h') {
+    return await this.getWebSiteDataForAPeriod(authData, siteData, 'stats', '/stats', period);
   }
 
   // GET /api/website/{id}/pageviews
+  /*
+   * @deprecated : please use getPageViews(...)
+   */
   async getPageViewsForLast24h(authData, siteData, options = {unit:'hour', tz: 'Europe/Paris'}) {
-    return await this.getWebSiteDataForAPeriod(authData, siteData, 'page views', '/pageviews', '24h', options);
+    return await this.getPageViews(authData, siteData, options, '24h');
+  }
+  async getPageViews(authData, siteData, options = {unit:'hour', tz: 'Europe/Paris'}, period = '24h') {
+    return await this.getWebSiteDataForAPeriod(authData, siteData, 'page views', '/pageviews', period, options);
   }
 
   // GET /api/website/{id}/events
+  /*
+   * @deprecated : please use getEvents(...)
+   */
   async getEventsForLast24h(authData, siteData, options = {unit:'hour', tz: 'Europe/Paris'}) {
-    return await this.getWebSiteDataForAPeriod(authData, siteData, 'page events', '/events', '24h', options);
+    return await this.getEvents(authData, siteData, options);
+  }
+  async getEvents(authData, siteData, options = {unit:'hour', tz: 'Europe/Paris'}, period = '24h') {
+    return await this.getWebSiteDataForAPeriod(authData, siteData, 'page events', '/events', period, options);
   }
 
   // GET /api/website/{id}/metrics
+  /*
+   * @deprecated : please use getMetrics(...)
+   */
   async getMetricsForLast24h(authData, siteData, options = { type: 'url' } ) {
-    return await this.getWebSiteDataForAPeriod(authData, siteData, 'metrics', '/metrics', '24h', options);
+    return await this.getMetrics(authData, siteData, options);
+  }
+  async getMetrics(authData, siteData, options = { type: 'url' }, period = '24h') {
+    return await this.getWebSiteDataForAPeriod(authData, siteData, 'metrics', '/metrics', period, options);
   }
 
   _assumeUmamiServer() {
@@ -92,11 +116,12 @@ class UmamiClient {
 export default UmamiClient;
 
 //~ private
+const EXPECTED_SITE_DATA_KEYS = ['website_id', 'website_uuid', 'name', 'domain', 'created_at'];
 const isObject = (a) => (!!a) && (a.constructor === Object);
 const isSet = (value) => value !== null && value !== undefined;
 const isNotEmptyArray = (value) => isSet(value) && Array.isArray(value) && value.length > 0;
 const arrayIncludesAllOf = (arr, target) => target.every(v => arr.includes(v));
-const isUmamiSiteData = (data) => isSet(data) && arrayIncludesAllOf(Object.keys(data), ['website_id', 'website_uuid', 'name', 'domain', 'created_at']);
+const isUmamiSiteData = (data) => isSet(data) && Object.keys(data).length >= EXPECTED_SITE_DATA_KEYS.length && arrayIncludesAllOf(Object.keys(data), EXPECTED_SITE_DATA_KEYS);
 const rethrow = (err) => {throw err;}
 const assumeResponseSuccess = async function (response, errorMsg) {
   if (response.status < 200 || response.status > 299) {
@@ -114,15 +139,34 @@ const givenAuthAndSiteData = (authData, siteData) => {
       throw "Unexpected site data provided";
     }
 };
+const HOUR_IN_MS = (60000 * 60);
+const DAY_IN_MS = (HOUR_IN_MS * 24);
+const HOUR_PERIODS = ['1h','1hour','60min'];
+const DAY_PERIODS = ['1d','1day','24h','24hours'];
+const WEEK_PERIODS = ['7d','7days','1w','1week'];
+const MONTH_PERIODS = ['31d','31days','1m','1month'];
+const THIRTY_DAYS_PERIODS = ['30d','30days'];
+const ACCEPTED_PERIODS = [...HOUR_PERIODS, ...DAY_PERIODS, ...WEEK_PERIODS, ...MONTH_PERIODS, ...THIRTY_DAYS_PERIODS];
+const buildPeriodOptions = (options, diffMs) => {
+  const start_at = Date.now() + diffMs;
+  const end_at = Date.now();
+  options = { ...options, start_at, end_at };
+  return options;
+}
 const enrichOptionsWithPeriod = (options = {}, period = '24h') => {
   if (!isObject(options)) {
     throw "Unexpected options provided";
   }
-  if (period === '24h') {
-    const start_at = Date.now()  - (60000 * 60 * 24);// now - 24h
-    const end_at = Date.now();
-    options = { ...options, start_at, end_at };
-    return options;
+  if (HOUR_PERIODS.includes(period)) {
+    return buildPeriodOptions(options, -HOUR_IN_MS);
+  } else if (DAY_PERIODS.includes(period)) {
+    return buildPeriodOptions(options, -DAY_IN_MS);
+  } else if (WEEK_PERIODS.includes(period)) {
+    return buildPeriodOptions(options, - (7 * DAY_IN_MS));
+  } else if (MONTH_PERIODS.includes(period)) {
+    return buildPeriodOptions(options, - (31 * DAY_IN_MS));
+  } else if (THIRTY_DAYS_PERIODS.includes(period)) {
+    return buildPeriodOptions(options, - (30 * DAY_IN_MS));
   }
-  throw "Unexpected period provided";
+  throw `Unexpected period provided. Accepted values are : ${ACCEPTED_PERIODS}`;
 }

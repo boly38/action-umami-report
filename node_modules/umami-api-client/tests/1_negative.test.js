@@ -7,6 +7,8 @@ const expect = chai.expect;
 
 var testClient = new UmamiClient({server:'https://fake.umami.exemple.com'})
 
+const validSiteData = {website_id:0, website_uuid: 'uuu44-4444-6666', name: 'test-site-data', domain:'www.example.com', created_at:'2022-02-17T12:57:43.805Z'};
+
 describe("Test UmamiClient negative cases", function() {
   before(function () {
     delete process.env.UMAMI_SERVER;
@@ -32,33 +34,44 @@ describe("Test UmamiClient negative cases", function() {
       expect(function () { testClient.selectSiteByDomain([{}]) } ).to.throw("Unexpected sites data provided");
   });
 
-  it("getStatsForLast24h should not work without valid siteDatas" , async function() {
+  it("getStats should not work without valid period" , async function() {
       try {
-        await testClient.getStatsForLast24h({token:'fake'}, [{}]);
+        await testClient.getStats({token:'fake'}, validSiteData, 'SEVEN DAYS');
+      } catch(error) {
+        expect(error).to.have.string('Unexpected period provided');
+        expect(error).to.have.string('Accepted values are');
+        expect(error).to.have.string('24h');
+        expect(error).to.have.string('1w');
+      }
+  });
+
+  it("getStats should not work without valid siteData" , async function() {
+      try {
+        await testClient.getStats({token:'fake'}, {});
       } catch(error) {
         assert.equal(error, "Unexpected site data provided")
       }
   });
 
-  it("getPageViewsForLast24h should not work without valid siteDatas" , async function() {
+  it("getPageViews should not work without valid siteData" , async function() {
       try {
-        await testClient.getStatsForLast24h({token:'fake'}, [{}]);
+        await testClient.getStats({token:'fake'}, {});
       } catch(error) {
         assert.equal(error, "Unexpected site data provided")
       }
   });
 
-  it("getEventsForLast24h should not work without valid siteDatas" , async function() {
+  it("getEvents should not work without valid siteData" , async function() {
       try {
-        await testClient.getEventsForLast24h({token:'fake'}, [{}]);
+        await testClient.getEvents({token:'fake'}, {});
       } catch(error) {
         assert.equal(error, "Unexpected site data provided")
       }
   });
 
-  it("getMetricsForLast24h should not work without valid siteDatas" , async function() {
+  it("getMetrics should not work without valid siteData" , async function() {
       try {
-        await testClient.getMetricsForLast24h({token:'fake'}, [{}]);
+        await testClient.getMetrics({token:'fake'}, {});
       } catch(error) {
         assert.equal(error, "Unexpected site data provided")
       }

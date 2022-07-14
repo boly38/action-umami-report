@@ -12,7 +12,9 @@ Features
 using apiKey:
 - login
 - getSites
-- getStatsForLast24h, getPageViewsForLast24h, getEventsForLast24h, getMetricsForLast24h
+- getStats, getPageViews, getEvents, getMetrics
+
+accepted periods are : `1h`, `1d`, `7d`, `30d`, `31d`.
 
 # Quick start
 
