@@ -1,21 +1,30 @@
 # action-umami-report
 
-This [action](./action.yml) prints daily umami report into a given file, and produce action outputs.
+This [action](./action.yml) generates periodic umami reports into a given file, and action outputs.
+
+Accepted periods are: 1h, 1d, 7d, 30d, 31d.
 
 ## Inputs
 
 | input name             | required | description                        |
 |------------------------|----------|------------------------------------|
-| `umami-server`         | yes      | The umami server instance.         |
+| `umami-server`         | yes      | Umami server instance (*).         |
 | `umami-user`           | yes      | Umami API user. Default `"admin"`. | 
 | `umami-password`       | yes      | Umami API password.                | 
-| `umami-site-domain`    | no       | Umami site domain name.            | 
+| `umami-site-domain`    | no       | Umami site domain name (*).        | 
 | `umami-report-file`    | no       | Umami report file to generate.     | 
-| `umami-report-content` | no       | Report content to generate.        | 
+| `umami-report-content` | no       | Report content to generate (*).    | 
+| `umami-period`         | no       | Report data/analysis period (*).   | 
+| `umami-unit`           | no       | Report interval unit (*).          | 
+| `umami-tz`             | no       | Report date time timezone (*).     | 
 
-- [Umami API](https://umami.is/docs/api) expected to be available at `<umami-server>/api/auth/login`.
+legend*:
+- [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
 - `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
 - `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
+- `umami-period` default is `24h` (means 24 hours). But you can switch it to `1h`/`7d`/`30d`/`31d`.
+- `umami-unit` default is `hour`. But you can switch it to `day` depend on the period you choose.
+- `umami-tz` default is 'Europe/Paris'. But you can switch it to another timezone supported by Umami API (ex. `America/Los_Angeles`).
 
 ## Action outputs
 
