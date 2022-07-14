@@ -14,9 +14,9 @@ Accepted periods are: 1h, 1d, 7d, 30d, 31d.
 | `umami-site-domain`    | no       | Umami site domain name (*).        | 
 | `umami-report-file`    | no       | Umami report file to generate.     | 
 | `umami-report-content` | no       | Report content to generate (*).    | 
-| `umami-period`         | no       | Report data/analysis period (*).   | 
-| `umami-unit`           | no       | Report interval unit (*).          | 
-| `umami-tz`             | no       | Report date time timezone (*).     | 
+| `umami-period`         | no       | (main) Report data/analysis period (*).   | 
+| `umami-unit`           | no       | (main) Report interval unit (*).          | 
+| `umami-tz`             | no       | (main) Report date time timezone (*).     | 
 
 legend*:
 - [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
