@@ -1,4 +1,4 @@
-name: daily-umami-report
+name: weekly-umami-report
 
 on:
   schedule:
