@@ -24,7 +24,7 @@ legend*:
 - `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
 - `umami-period` default is `24h` (means 24 hours). But you can switch it to `1h`/`7d`/`30d`/`31d`.
 - `umami-unit` default is `hour`. But you can switch it to `day` depend on the period you choose.
-- `umami-tz` default is 'Europe/Paris'. But you can switch it to another timezone supported by Umami API (ex. `America/Los_Angeles`).
+- `umami-tz` default is `Europe/Paris`. But you can switch it to another timezone supported by Umami API (ex. `America/Los_Angeles`).
 
 ## Action outputs
 
@@ -68,7 +68,7 @@ jobs:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
           content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
 ```
-Full working sample: cf. [umamiReport.yml](.github/workflows/umamiReport.yml)
+Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_report.yml)
 
 # See also
 
@@ -85,13 +85,15 @@ Or else:
 * Clone
 * Install deps
 * setup your test environment (cf. [initenv.template.sh](./env/initenv.template.sh))
+```
+cp ./env/initenv.template.sh ./env/initenv.dontpush.sh
+. ./env/initenv.dontpush.sh
+```
 * Then run manual test
 ```
 git clone https://github.com/boly38y/action-umami-report.git
 cd action-umami-report
 npm install
-# setup your env
-. ./env/initenv.dontpush.sh
 npm manual.js
 ```
 * you could also fork, feature branch, then submit a pull request.
