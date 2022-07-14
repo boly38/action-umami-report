@@ -26,6 +26,18 @@ inputs:
     description: The umami report content to produce
     required: false
     default: 'pageviews|events|urls'
+  umami-period:
+    description: The umami report period
+    required: false
+    default: '24h'
+  umami-unit:
+    description: The umami report unit
+    required: false
+    default: 'hour'
+  umami-tz:
+    description: The umami report Timezone
+    required: false
+    default: 'Europe/Paris'
 runs:
   using: node16
   main: main.js
