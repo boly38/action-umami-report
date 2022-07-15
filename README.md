@@ -73,7 +73,7 @@ Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_
 # See also
 
 ## Umami
-- Umami [API](https://umami.is/docs/api) ([API client](https://github.com/boly38/umami-api-client))- [Source](https://github.com/umami-software/umami)
+- Umami [API](https://umami.is/docs/api) ([API client](https://github.com/jakobbouchard/umami-api-client))- [Source](https://github.com/umami-software/umami)
 
 ## possible next step
 - send the report [by email](https://github.com/marketplace?type=actions&query=mail+), on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
