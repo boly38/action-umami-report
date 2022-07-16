@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2022-07-15
+
+This release contains a small breaking change. And all the available endpoints now!
+
+### Added
+
+- `getEventsByName(...)` – Get events by their name/value. Now with full info!
+- [**Admin only**] `createAccount(...)` – Create a user account. 
+- `updateAccount(...)` – Update account info. `username` and `is_admin` can only be changed by admins.
+- `changePassword(...)` – Change your password.
+- [**Admin only**] `getAccount(...)` – Get a user account.
+- [**Admin only**] `deleteAccount(...)` – Delete a user account.
+- All the available API options.
+
+### Removed
+
+- [BREAKING] `getEventsBy(...)` is gone, since you can request the event type in the regular `getEvents(...)` function now.
+- Does not check manually for admin rights anymore, since the API does it for us.
+
 ## [0.2.0] - 2022-07-15
 
 This release contains a LOT of breaking changes. Also a lot of new stuff!
