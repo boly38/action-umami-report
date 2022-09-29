@@ -16,7 +16,7 @@ inputs:
     required: true
   umami-site-domain:
     description: The umami site domain name
-    default: '*first*'
+    default: ''
     required: false
   umami-report-file:
     description: The umami report file to produce (skipped if empty)
