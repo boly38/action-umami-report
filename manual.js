@@ -5,7 +5,7 @@ import github from '@actions/github';
 const UMAMI_SERVER = process.env.UMAMI_SERVER || null; // "https://umami.exemple.com";
 const UMAMI_USER = process.env.UMAMI_USER || "admin";
 const UMAMI_PASSWORD = process.env.UMAMI_PASSWORD || null;
-const UMAMI_SITE_DOMAIN = process.env.UMAMI_SITE_DOMAIN || "*first*";
+const UMAMI_SITE_DOMAIN = process.env.UMAMI_SITE_DOMAIN;
 const UMAMI_REPORT_FILE = process.env.UMAMI_REPORT_FILE || "umamiReport.txt";
 const UMAMI_REPORT_CONTENT = process.env.UMAMI_REPORT_CONTENT || "pageviews|events|urls";
 const rethrow = (err) => {throw err;}

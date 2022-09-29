@@ -115,7 +115,7 @@ function _richError(message: string, cause?: any, options?: any): Error {
 	if (!cause) cause = "None specified";
 	cause = cause.toString();
 
-	return new Error(`${message}\nOptions: ${options}\nStacktrace:`, { cause });
+	return new Error(`${message}\nOptions: ${options}\nStacktrace:${cause}\n`);
 }
 
 class TrackedWebsite<A extends boolean> {
