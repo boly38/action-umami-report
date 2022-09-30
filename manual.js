@@ -2,7 +2,7 @@ import action from './lib/action.js'
 import core from '@actions/core';
 import github from '@actions/github';
 
-const UMAMI_SERVER = process.env.UMAMI_SERVER || null; // "https://umami.exemple.com";
+const UMAMI_SERVER = process.env.UMAMI_SERVER || null; // "umami.exemple.com";
 const UMAMI_USER = process.env.UMAMI_USER || "admin";
 const UMAMI_PASSWORD = process.env.UMAMI_PASSWORD || null;
 const UMAMI_SITE_DOMAIN = process.env.UMAMI_SITE_DOMAIN;
@@ -16,7 +16,7 @@ const actionUmamiReport = async function() {
         throw "please setup your environment UMAMI_SERVER, UMAMI_USER, UMAMI_PASSWORD, UMAMI_SITE_DOMAIN"
       }
       var options = {};
-      options.server = UMAMI_SERVER;
+      options.server = "https://" + UMAMI_SERVER;
       options.user = UMAMI_USER;
       options.password = UMAMI_PASSWORD;
       options.domain = UMAMI_SITE_DOMAIN;
