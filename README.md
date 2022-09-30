@@ -19,7 +19,7 @@ Accepted periods are: 1h, 1d, 7d, 30d, 31d.
 | `umami-tz`             | no       | (main) Report date time timezone (*).     | 
 
 legend*:
-- [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
+- [Umami API](https://umami.is/docs/api) login expected to be available at `https://<umami-server>/api/auth/login`.
 - `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
 - `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
 - `umami-period` default is `24h` (means 24 hours). But you can switch it to `1h`/`7d`/`30d`/`31d`.
@@ -56,7 +56,7 @@ jobs:
         id: umamiReport
         uses: boly38/action-umami-report@stable
         with:
-          umami-server: ${{secrets.UMAMI_SERVER}}
+          umami-server: https://${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
           umami-password: ${{secrets.UMAMI_PASSWORD}}
           umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
