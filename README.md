@@ -2,21 +2,21 @@
 
 This [action](./action.yml) generates periodic umami reports into a given file, and action outputs.
 
-Accepted periods are: 1h, 1d, 7d, 30d, 31d.
+Accepted periods are: 1h, 1d, 1w, 1m.
 
 ## Inputs
 
-| input name             | required | description                        |
-|------------------------|----------|------------------------------------|
-| `umami-server`         | yes      | Umami server instance (*).         |
-| `umami-user`           | yes      | Umami API user. Default `"admin"`. | 
-| `umami-password`       | yes      | Umami API password.                | 
-| `umami-site-domain`    | no       | Umami site domain name (*).        | 
-| `umami-report-file`    | no       | Umami report file to generate.     | 
-| `umami-report-content` | no       | Report content to generate (*).    | 
-| `umami-period`         | no       | (main) Report data/analysis period (*).   | 
-| `umami-unit`           | no       | (main) Report interval unit (*).          | 
-| `umami-tz`             | no       | (main) Report date time timezone (*).     | 
+| input name             | required | description                             |
+|------------------------|----------|-----------------------------------------|
+| `umami-server`         | yes      | Umami server instance (*).              |
+| `umami-user`           | yes      | Umami API user. Default `"admin"`.      | 
+| `umami-password`       | yes      | Umami API password.                     | 
+| `umami-site-domain`    | no       | Umami site domain name (*).             | 
+| `umami-report-file`    | no       | Umami report file to generate.          | 
+| `umami-report-content` | no       | Report content to generate (*).         | 
+| `umami-period`         | no       | (main) Report data/analysis period (*). | 
+| `umami-unit`           | no       | (main) Report interval unit (*).        | 
+| `umami-tz`             | no       | (main) Report date time timezone (*).   | 
 
 legend*:
 - [Umami API](https://umami.is/docs/api) login expected to be available at `https://<umami-server>/api/auth/login`.
@@ -101,9 +101,12 @@ npm manual.js
 
 ### Services or activated bots
 
-| badge                                                                                                                                                                                     | name                                                         | description                                                                        |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|:-----------------------------------------------------------------------------------|
-| [![scheduled npm audit](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml/badge.svg)](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml)  | Github actions                                               | Continuous vulnerability audit.                                                    
-| [<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="100">](https://houndci.com/)                                                                    | [Houndci](https://houndci.com/)                              | JavaScript  automated review (configured by `.hound.yml`)                          |
-| [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)                          | [gren](https://github.com/github-tools/github-release-notes) | [Release notes](https://github.com/boly38/action-umami-report/releases) automation |
+- [Github actions](https://github.com/features/actions) - Continuous vulnerability audit.<br/>
+[![scheduled npm audit](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml/badge.svg)](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml)
+ 
+- [Houndci](https://houndci.com/) - JavaScript  automated review (configured by [`.hound.yml`](./.hound.yml)).<br/>
+[<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="100">](https://houndci.com/)
+
+- [gren](https://github.com/github-tools/github-release-notes) - [Release notes](https://github.com/boly38/action-umami-report/releases) automation.<br/>
+[![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 
