@@ -25,6 +25,8 @@ jobs:
           umami-period: '1w'
           umami-unit: 'day'
           umami-tz: 'Europe/Paris'
+        env:
+          UMAMI_CLIENT_TIMEOUT_MS: 5000
 
       - name: Send Umami report to discord channel as embed when small enough
         uses: tsickert/discord-webhook@v4.0.0
