@@ -29,6 +29,14 @@ class Manual {
       return options;
   }
 
+  async fetch(options = {}) {
+    try {
+      const reportResult = await action.fetchUmamiServerApi(options.server).catch(rethrow);
+    } catch (error) {
+      console.info(`ERROR: ${error}`)
+    }
+  }
+
   async report(options = {}) {
     try {
       const reportResult = await action.umamiReport(options).catch(rethrow);

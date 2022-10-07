@@ -34,6 +34,8 @@ const actionUmamiReport = async function() {
       options.period = umamiPeriod;
       options.unit = umamiUnit;
       options.tz = umamiTz;
+
+      await action.fetchUmamiServerApi(umamiServer);
       // printContext();
       const reportResult = await action.umamiReport(options).catch(rethrow);
       if ('targetFile' in reportResult) {
