@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Create Daily Umami report
         id: umamiReportStep
-        uses: boly38/action-umami-report@main
+        uses: boly38/action-umami-report@fetchBefore
         with:
           umami-server: https://${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
