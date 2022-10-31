@@ -1,6 +1,6 @@
 # Umami API Client
 
-🍙 Simple, tiny (<2.5kB gzipped), API client for Umami analytics.	
+🍙 Simple, tiny (<2.5kB gzipped), API client for Umami analytics.
 
 ## Installation
 
