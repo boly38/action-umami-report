@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Create Umami report
         id: umamiReport
-        uses: boly38/action-umami-report@stable
+        uses: boly38/action-umami-report@umami-server-2.9.0
         with:
           umami-server: https://${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
@@ -70,10 +70,20 @@ jobs:
 ```
 Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_report.yml)
 
+**TIP**: if your umami server version is not compatible with current GithubActions, you could change `umami-server-2.9.0` keyword by one of the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format. 
+
 # See also
 
 ## Umami
-- Umami [API](https://umami.is/docs/api) ([API client](https://github.com/jakobbouchard/umami-api-client))- [Source](https://github.com/umami-software/umami)
+Umami server :
+- [API](https://umami.is/docs/api) 
+- [source](https://github.com/umami-software/umami)
+
+Umami API clients:
+- jakobbouchard TS/JS [umami-api-client](https://github.com/jakobbouchard/umami-api-client)
+  - Import: `import UmamiApiClient from 'umami-api'`
+- boly38 JS [umami-api-client](https://github.com/boly38/umami-api-client)
+  - Import: `import UmamiClient from 'umami-api-client'` 
 
 ## possible next step
 - send the report [by email](https://github.com/marketplace?type=actions&query=mail+), on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
@@ -91,10 +101,12 @@ cp ./env/initenv.template.sh ./env/initenv.dontpush.sh
 ```
 * Then run manual test
 ```
-git clone https://github.com/boly38y/action-umami-report.git
+git clone https://github.com/boly38/action-umami-report.git
 cd action-umami-report
 npm install
-npm manual.js
+npm run day
+npm run showResults
+# check other targets in package.json
 ```
 * you could also fork, feature branch, then submit a pull request.
 
