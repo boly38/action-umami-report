@@ -22,9 +22,9 @@ const printContext = () => {
 const actionUmamiReport = async function() {
     try {
       if (umamiServer === null || umamiServer === undefined) {
-        throw "please setup your environment"
+        throw new Error("please setup your environment");
       }
-      var options = {};
+      let options = {};
       options.server = umamiServer;
       options.user = umamiUser;
       options.password = umamiPassword;
