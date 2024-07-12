@@ -19,7 +19,7 @@ Accepted periods are: 1h, 1d, 1w, 1m.
 | `umami-tz`             | no       | (main) Report date time timezone (*).   | 
 
 legend*:
-- [Umami API](https://umami.is/docs/api) login expected to be available at `https://<umami-server>/api/auth/login`.
+- [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
 - `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
 - `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
 - `umami-period` default is `24h` (means 24 hours). But you can switch it to `24h`/`7d`/`1w`/`31d`/`1m`.
@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Create Umami report
         id: umamiReport
-        uses: boly38/action-umami-report@umami-server-2.9.0
+        uses: boly38/action-umami-report@umami-server-2.12
         with:
           umami-server: https://${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
@@ -105,6 +105,7 @@ git clone https://github.com/boly38/action-umami-report.git
 cd action-umami-report
 npm install
 npm run day
+npm run debugDay
 npm run showResults
 # check other targets in package.json
 ```
