@@ -2,9 +2,9 @@ import action from './lib/action.js'
 import core from '@actions/core';
 import github from '@actions/github';
 
-const umamiServer = core.getInput('umami-server', { required: true });
-const umamiUser = core.getInput('umami-user', { required: true });
-const umamiPassword = core.getInput('umami-password', { required: true });
+const umamiServer = core.getInput('umami-server', { required: true }); // example : https://umami.myinstance.com
+const umamiUser = core.getInput('umami-user', { required: true }); // example : admin
+const umamiPassword = core.getInput('umami-password', { required: true }); // example : mY53[R3T
 const umamiSiteDomain = core.getInput('umami-site-domain');// ''
 const umamiReportFile = core.getInput('umami-report-file');// ''
 const umamiReportContent = core.getInput('umami-report-content');// 'pageviews|events|urls'
