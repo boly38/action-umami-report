@@ -39,5 +39,5 @@ inputs:
     required: false
     default: 'Europe/Paris'
 runs:
-  using: node16
+  using: 'node20'
   main: main.js
