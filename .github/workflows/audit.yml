@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
@@ -37,7 +37,7 @@ jobs:
           npm outdated --depth=3 || echo "you must think about update your dependencies :)"
 
       - name: Npm audit
-        uses: oke-py/npm-audit-action@v1.7.1
+        uses: oke-py/npm-audit-action@v2.4.4
         with:
           audit_level: moderate
           github_token: ${{ secrets.GITHUB_TOKEN }}
