@@ -19,7 +19,7 @@ import fromDataURI from '../helpers/fromDataURI.js';
 import stream from 'stream';
 import AxiosHeaders from '../core/AxiosHeaders.js';
 import AxiosTransformStream from '../helpers/AxiosTransformStream.js';
-import EventEmitter from 'events';
+import {EventEmitter} from 'events';
 import formDataToStream from "../helpers/formDataToStream.js";
 import readBlob from "../helpers/readBlob.js";
 import ZlibHeaderTransformStream from '../helpers/ZlibHeaderTransformStream.js';
@@ -53,12 +53,12 @@ const supportedProtocols = platform.protocols.map(protocol => {
  *
  * @returns {Object<string, any>}
  */
-function dispatchBeforeRedirect(options) {
+function dispatchBeforeRedirect(options, responseDetails) {
   if (options.beforeRedirects.proxy) {
     options.beforeRedirects.proxy(options);
   }
   if (options.beforeRedirects.config) {
-    options.beforeRedirects.config(options);
+    options.beforeRedirects.config(options, responseDetails);
   }
 }
 
