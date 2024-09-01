@@ -4,5 +4,5 @@ const manual = new Manual();
 
 var options = manual.getOptions()
     options.period = '1week';
-    options.unit = 'hour';
+    options.unit = 'day';
 manual.report(options);
