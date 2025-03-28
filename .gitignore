@@ -2,8 +2,9 @@
 .idea/
 *.iml
 
-## node_modules/
+node_modules/
 # github actions require node_modules too
+## TODO : install within action?
 # https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
 
 # dont push

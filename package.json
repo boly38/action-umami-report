@@ -3,9 +3,17 @@
   "dependencies": {
     "@actions/core": "^1.10.1",
     "@actions/github": "^6.0.0",
+    "@umami/api-client": "^0.78.0",
     "axios": "^1.7.7",
     "dayjs": "^1.11.11",
     "umami-api-client": "^2.0.9"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "next": ">=14.2.15"
+      }
+    }
   },
   "scripts": {
     "fetch": "node ./fetch.js",
@@ -16,5 +24,6 @@
     "day": "node ./manual_24h_hour.js",
     "debugDay": "export UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
     "showResults": "cat ./umami/umamiReport.txt"
-  }
+  },
+  "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6"
 }
