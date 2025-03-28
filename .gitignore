@@ -2,9 +2,9 @@
 .idea/
 *.iml
 
-## node_modules/
-# github actions require node_modules too
-# https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action
+# cf CONTRIBUTING.md § package
+node_modules/
+dist/
 
 # dont push
 *.dontpush.*

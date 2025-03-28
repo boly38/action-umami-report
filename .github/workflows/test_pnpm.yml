@@ -1,0 +1,49 @@
+name: TEST_PNPM
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_PATH: "${{ github.workspace }}"
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - name: Cache pnpm modules
+        id: pnpm-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+      - name: Install pnpm
+        run: npm install -g pnpm
+      - name: Setup vercel/ncc for packaging
+        run: pnpm install -g @vercel/ncc
+      - name: Setup deps
+        run: pnpm install
+      # https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github
+      - name: CREATE package - action autonomous package with deps in dist/
+        run: ncc build main.js
+      - name: DEPLOY package - on target orphan branch 'pnpm-test'
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/draft/npm-to-pnpm'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: pnpm-test
+          publish_dir: ./dist
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: ${{ github.event.head_commit.message }}
+          force_orphan: true
