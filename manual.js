@@ -25,7 +25,7 @@ export default class Manual {
         options.reportContent = UMAMI_REPORT_CONTENT;
         options.period = '24h';
         options.unit = 'hour';
-        options.timezone = 'Europe/Paris'; // breaking change
+        options.tz = 'Europe/Paris';
         return options;
     }
 
