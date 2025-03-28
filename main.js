@@ -47,4 +47,5 @@ const actionUmamiReport = async function() {
     }
 }
 
+core.info(`PNPM ACTION`);
 actionUmamiReport();

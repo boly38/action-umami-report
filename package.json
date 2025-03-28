@@ -8,6 +8,7 @@
     "umami-api-client": "^2.0.9"
   },
   "scripts": {
+    "install-deps": "pnpm install",
     "fetch": "node ./fetch.js",
     "month": "node ./manual_1m_day.js",
     "monthH": "node ./manual_1m_hour.js",
@@ -15,6 +16,8 @@
     "weekH": "node ./manual_1w_hour.js",
     "day": "node ./manual_24h_hour.js",
     "debugDay": "export UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
+    "debugDayWin": "set UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
     "showResults": "cat ./umami/umamiReport.txt"
-  }
+  },
+  "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6"
 }

@@ -75,9 +75,7 @@ Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_
 # See also
 
 ## Umami
-Umami server :
-- [API](https://umami.is/docs/api) 
-- [source](https://github.com/umami-software/umami)
+Umami server : [API](https://umami.is/docs/api) - [source](https://github.com/umami-software/umami)
 
 Umami API clients:
 - jakobbouchard TS/JS [umami-api-client](https://github.com/jakobbouchard/umami-api-client)
@@ -87,29 +85,6 @@ Umami API clients:
 
 ## possible next step
 - send the report [by email](https://github.com/marketplace?type=actions&query=mail+), on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
-
-# How to contribute
-You're not a dev ? just submit an issue (bug, improvements, questions). 
-
-Or else:
-* Clone
-* Install deps
-* setup your test environment (cf. [initenv.template.sh](./env/initenv.template.sh))
-```
-cp ./env/initenv.template.sh ./env/initenv.dontpush.sh
-. ./env/initenv.dontpush.sh
-```
-* Then run manual test
-```
-git clone https://github.com/boly38/action-umami-report.git
-cd action-umami-report
-npm install
-npm run day
-npm run debugDay
-npm run showResults
-# check other targets in package.json
-```
-* you could also fork, feature branch, then submit a pull request.
 
 
 ### Services or activated bots
