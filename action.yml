@@ -40,4 +40,4 @@ inputs:
     default: 'Europe/Paris'
 runs:
   using: 'node20'
-  main: main.js
+  main: index.js

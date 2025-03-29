@@ -12,7 +12,7 @@ fi
 
 # package with ncc
 echo "📦 Running ncc build..."
-ncc build main.js
+ncc build index.js
 
 # add action.yml
 if [ -f "action.yml" ]; then

@@ -35,6 +35,6 @@ pnpm run showResults
 ## HowTo package
 ````bash
 pnpm install -g @vercel/ncc
-ncc build main.js
+ncc build index.js
 # package result under dist/
 ````
