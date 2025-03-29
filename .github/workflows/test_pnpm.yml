@@ -39,10 +39,9 @@ jobs:
       - name: Setup deps
         run: pnpm install
 
-      # to skip node_modules in git     | https://github.com/orgs/community/discussions/102976
-      # use @vercel/ncc to package them | https://docs.github.com/en/actions/sharing-automations/creating-actions/creating-a-javascript-action#commit-tag-and-push-your-action-to-github
-      - name: CREATE package - action autonomous package with deps in dist/
-        run: ncc build main.js
+      # skip node_modules in git using @vercel/ncc to package action
+      - name: Package app - action autonomous package with deps in dist/
+        run: ./.github/scripts/package.sh
 
       - name: DEPLOY package - on target orphan branch '${{ env.ORPHAN_BRANCH }}'
         uses: peaceiris/actions-gh-pages@v4
