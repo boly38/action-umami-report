@@ -19,16 +19,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - name: Cache pnpm modules
-        id: pnpm-cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-      - name: Install pnpm
-        run: npm install -g pnpm
+          cache-dependency-path: pnpm-lock.yaml
       - name: Setup vercel/ncc for packaging
         run: pnpm install -g @vercel/ncc
       - name: Setup deps
