@@ -2,7 +2,10 @@ name: TEST_PNPM
 
 on:
   workflow_dispatch:
-
+  # Triggers the workflow on push or pull request events but only for the prod branch
+  push:
+    branches:
+      - stable
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -52,5 +55,5 @@ jobs:
           publish_dir: ./dist
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: ${{ github.event.head_commit.message }}
+          commit_message: ${{ github.ref }} commit ${{ github.sha}}
           force_orphan: true
