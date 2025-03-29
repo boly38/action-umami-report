@@ -48,7 +48,7 @@ jobs:
 
       - name: DEPLOY package - on target orphan branch '${{ env.ORPHAN_BRANCH }}'
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/stable'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: ${{ env.ORPHAN_BRANCH }}
