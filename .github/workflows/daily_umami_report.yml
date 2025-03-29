@@ -1,4 +1,6 @@
 name: daily-umami-report
+permissions:
+  contents: none
 
 on:
   schedule:

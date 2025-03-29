@@ -1,4 +1,7 @@
-name: TEST_PNPM
+name: package_stable_action
+permissions:
+  contents: write
+  pull-requests: read
 
 on:
   workflow_dispatch:

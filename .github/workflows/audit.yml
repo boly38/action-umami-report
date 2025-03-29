@@ -1,4 +1,8 @@
 name: scheduled npm audit
+permissions:
+  contents: read
+  pull-requests: read
+  issues: write
 
 on:
   schedule:
