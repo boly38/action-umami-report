@@ -1,4 +1,4 @@
-name: scheduled npm audit
+name: scheduled pnpm audit
 permissions:
   contents: read
   pull-requests: read
@@ -12,7 +12,7 @@ on:
 
 jobs:
   scan:
-    name: npm audit
+    name: pnpm audit
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,19 +28,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: 'pnpm'
           cache-dependency-path: |
-            package-lock.json
+            pnpm-lock.yaml
 
       - name: Install dependencies
-        # - run: npm ci # need package.json.lock
         run: |
-          echo "install"
-          npm install
-          echo "show outdated (if any)"
-          npm outdated --depth=3 || echo "you must think about update your dependencies :)"
+          echo "Installing dependencies..."
+          pnpm install --frozen-lockfile
+          echo "Checking for outdated dependencies..."
+          pnpm outdated && echo "Dependencies are up to date 🎉"
 
-      - name: Npm audit
+      - name: Run pnpm audit
+        run: pnpm audit # --audit-level moderate
+
+      - name: Report audit results
         uses: oke-py/npm-audit-action@v2.4.4
         with:
           audit_level: moderate
