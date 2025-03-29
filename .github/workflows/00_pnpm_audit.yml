@@ -35,7 +35,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yamlg
 
       - name: Install dependencies
         run: |
@@ -45,13 +45,4 @@ jobs:
           pnpm outdated && echo "Dependencies are up to date 🎉"
 
       - name: Run pnpm audit
-        run: pnpm audit # --audit-level moderate
-
-      - name: Report audit results
-        uses: oke-py/npm-audit-action@v2.4.4
-        with:
-          audit_level: moderate
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          issue_assignees: boly38
-          issue_labels: vulnerability,bot
-          dedupe_issues: true
+        run: pnpm audit --json # --audit-level moderate
