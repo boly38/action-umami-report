@@ -1,4 +1,6 @@
 name: weekly-umami-report
+permissions:
+  contents: none
 
 on:
   schedule:
