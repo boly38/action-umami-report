@@ -5,16 +5,18 @@
     "@actions/github": "^6.0.0",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
-    "umami-api-client": "^2.0.9"
+    "umami-api-client": "^2.17.0"
+  },
+  "doc": {
+    "setup": "pnpm install"
   },
   "scripts": {
-    "install-deps": "pnpm install",
-    "fetch": "node ./fetch.js",
-    "month": "node ./manual_1m_day.js",
-    "monthH": "node ./manual_1m_hour.js",
-    "week": "node ./manual_1w_day.js",
-    "weekH": "node ./manual_1w_hour.js",
-    "day": "node ./manual_24h_hour.js",
+    "fetch": "node ./manual/fetch.js",
+    "month": "node ./manual/manual_1m_day.js",
+    "monthH": "node ./manual/manual_1m_hour.js",
+    "week": "node ./manual/manual_1w_day.js",
+    "weekH": "node ./manual/manual_1w_hour.js",
+    "day": "node ./manual/manual_24h_hour.js",
     "debugDay": "export UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
     "debugDayWin": "set UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
     "showResults": "cat ./umami/umamiReport.txt"
