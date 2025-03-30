@@ -1,4 +1,4 @@
-import action from '../lib/githubAction.js'
+import GithubAction from '../lib/githubAction.js'
 import {assumeInputIsSet} from "../lib/util.js";
 import process from "node:process";
 
@@ -41,7 +41,7 @@ export default class Manual {
 
     async fetch(options) {
         try {
-            const reportResult = await action.prefetchUmamiServerApi(options);
+            const reportResult = await GithubAction.prefetchUmamiServerApi(options);
             console.log(`reportResult: ${reportResult}`)
         } catch (error) {
             console.log(`ERROR: ${error}`)
@@ -55,9 +55,9 @@ export default class Manual {
             sitePageViews,
             siteEvents,
             siteMetricsUrl
-        } = await action.fetchUmamiData(server, username, password, domain, period, unit, timezone);
+        } = await GithubAction.fetchUmamiData(server, username, password, domain, period, unit, timezone);
 
-        return await action.produceReport(
+        return await GithubAction.produceReport(
             site, siteStats, sitePageViews, siteEvents, siteMetricsUrl,
             outputFile, reportContent, period
         );
