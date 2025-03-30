@@ -1,0 +1,43 @@
+name: Create Umami report
+description: Produce an umamiReport and outputs from umami website last 24h period
+branding:
+  icon: bar-chart
+  color: green
+author: boly38
+inputs:
+  umami-server:
+    description: The umami server instance.
+    required: true
+  umami-user:
+    description: The umami server instance user
+    required: true
+  umami-password:
+    description: The umami server instance password
+    required: true
+  umami-site-domain:
+    description: The umami site domain name
+    default: ''
+    required: false
+  umami-report-file:
+    description: The umami report file to produce (skipped if empty)
+    required: false
+    default: ''
+  umami-report-content:
+    description: The umami report content to produce
+    required: false
+    default: 'pageviews|events|urls'
+  umami-period:
+    description: The umami report period
+    required: false
+    default: '24h'
+  umami-unit:
+    description: The umami report unit
+    required: false
+    default: 'hour'
+  umami-tz:
+    description: The umami report Timezone
+    required: false
+    default: 'Europe/Paris'
+runs:
+  using: 'node20'
+  main: index.js
