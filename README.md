@@ -54,7 +54,7 @@ jobs:
     steps:
       - name: Create Umami report
         id: umamiReport
-        uses: boly38/action-umami-report@umami-server-2.12
+        uses: boly38/action-umami-report@umami-server-2.17.0
         with:
           umami-server: https://${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
