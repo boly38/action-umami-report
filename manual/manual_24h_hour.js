@@ -1,7 +1,6 @@
-import {logStringifyOf} from "../lib/util.js";
-import Manual from "./manual.js";
+import {logStringifyOf} from "../lib/services/util.js";
+import UmamiReport from "../lib/umamiReport.js";
 
-const manual = new Manual();
-manual.report(manual.getOptions())
+UmamiReport.manualReport(UmamiReport.getOptions())
     .then(logStringifyOf)
     .catch(console.error);

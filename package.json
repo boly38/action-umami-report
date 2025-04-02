@@ -1,5 +1,55 @@
 {
+  "name": "action-umami-report",
+  "description": "GitHub Action Umami Report - for a given period and time unit, use Umami API to produce report as file or output variables",
+  "version": "4.0",
   "type": "module",
+  "private": false,
+  "author": "Boly38 <boly38@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boly38/action-umami-report.git"
+  },
+  "bugs": {
+    "url": "https://github.com/boly38/action-umami-report/issues"
+  },
+  "keywords": [
+    "node",
+    "umami",
+    "rest",
+    "api",
+    "report",
+    "github",
+    "gha",
+    "action",
+    "githubaction"
+  ],
+  "copyright": {
+    "title": "action-umami-report",
+    "years": [
+      2022,
+      2025
+    ],
+    "author": "Brice Vandeputte"
+  },
+  "doc": {
+    "setup": "pnpm install",
+    "ci-test": "c8 config file is .nycrc.json",
+    "debug-mode": "export UMAMI_DEBUG_ACTION=true"
+  },
+  "scripts": {
+    "day": "node ./manual/manual_24h_hour.js",
+    "week": "node ./manual/manual_1w_day.js",
+    "weekH": "node ./manual/manual_1w_hour.js",
+    "month": "node ./manual/manual_1m_day.js",
+    "monthH": "node ./manual/manual_1m_hour.js",
+    "prefetch": "node ./manual/manual_prefetch_beta.js",
+    "showResults": "cat ./umami/umamiReport.txt",
+    "audit": "pnpm audit",
+    "test": "mocha tests/*.test.js",
+    "ci-test": "c8 pnpm run test",
+    "tst": "echo windows %TST% test&& mocha --trace-warnings --exit --timeout 180000 --unhandled-rejections=strict tests/%TST%.test.js"
+  },
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
@@ -7,20 +57,11 @@
     "dayjs": "^1.11.13",
     "umami-api-client": "^2.17.0"
   },
-  "doc": {
-    "setup": "pnpm install"
+  "devDependencies": {
+    "c8": "^10.1.3",
+    "mocha": "^11.1.0",
+    "sinon": "^20.0.0"
   },
-  "scripts": {
-    "fetch": "node ./manual/fetch.js",
-    "month": "node ./manual/manual_1m_day.js",
-    "monthH": "node ./manual/manual_1m_hour.js",
-    "week": "node ./manual/manual_1w_day.js",
-    "weekH": "node ./manual/manual_1w_hour.js",
-    "day": "node ./manual/manual_24h_hour.js",
-    "debugDay": "export UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
-    "debugDayWin": "set UMAMI_DEBUG_ACTION=true && node ./manual_24h_hour.js",
-    "showResults": "cat ./umami/umamiReport.txt"
-  },
-  "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6",
+  "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808",
   "orphanBranch": "umami-server-2.17.0"
 }

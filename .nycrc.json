@@ -1,0 +1,16 @@
+{
+  "description": "this file is used by c8/nyc to drive coverage analysis",
+  "reporter": ["text", "text-summary", "cobertura", "html", "lcov"],
+  "include": ["lib/**"],
+  "exclude": ["manual/**", "test{,s}/**", "lib/services/beta/**"],
+  "extension": [".js"],
+  "check-coverage": true,
+  "sourceMap": true,
+  "instrument": true,
+  "cache": true,
+  "all": false,
+  "lines": 80,
+  "functions": 80,
+  "statements": 80,
+  "branches": 60
+}

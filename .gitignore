@@ -5,6 +5,7 @@
 # cf CONTRIBUTING.md § package
 node_modules/
 dist/
+coverage/
 
 # dont push
 *.dontpush.*
