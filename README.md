@@ -70,7 +70,7 @@ jobs:
 ```
 Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_report.yml)
 
-**TIP**: if your umami server version is not compatible with current GithubActions, you could change `umami-server-2.9.0` keyword by one of the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format. 
+**TIP**: if your umami server version is not compatible with current GithubActions, you could change `umami-server-2.17.0` keyword by one of the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format. 
 
 # See also
 

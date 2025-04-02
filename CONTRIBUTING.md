@@ -19,7 +19,7 @@ cp ./env/initenv.template.sh ./env/initenv.dontpush.sh
 ````
 
 ## HowTo test
-* Then run manual test
+* To run manual test
 
 ````bash
 . ./env/initenv.dontpush.sh
@@ -28,7 +28,21 @@ pnpm run debugDay
 # or on windows : pnpm run debugDayWin
 pnpm run showResults
 # check other targets in package.json
+pnpm run
 ````
+
+* To run mocha test
+
+````bash
+. ./env/initenv.dontpush.sh
+# run all tests
+pnpm run test
+# run all tests with code coverage
+pnpm run ci-test
+# run a single test file
+tst=1_sinon_based pnpm run tst
+````
+
 
 * you could also fork, feature branch, then submit a pull request.
 

@@ -1,8 +1,7 @@
-import {logStringifyOf} from "../lib/util.js";
-import Manual from "./manual.js";
+import {logStringifyOf} from "../lib/services/util.js";
+import UmamiReport from "../lib/umamiReport.js";
 
 const period = "1month", unit = "day";
-const manual = new Manual();
-manual.report(manual.getOptions({period, unit}))
+UmamiReport.manualReport(UmamiReport.getOptions({period, unit}))
     .then(logStringifyOf)
     .catch(console.error);

@@ -1,4 +1,5 @@
-import GithubAction from './lib/githubAction.js'
+import UmamiReport from "./lib/umamiReport.js";
 
-GithubAction.doAction()
-    .then(r => {});
+UmamiReport.githubActionReport()
+    .then(() => {
+    });
