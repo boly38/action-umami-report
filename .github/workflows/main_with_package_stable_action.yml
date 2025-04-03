@@ -64,7 +64,6 @@ jobs:
         # uses: romeovs/lcov-reporter-action@v0.2.16 # https://github.com/romeovs/lcov-reporter-action/issues/10
         uses: andybelltree/lcov-reporter-action@v1.7.0 # https://github.com/andybelltree/lcov-reporter-action/releases
         with:
-          github-token: ${{ secrets.GH_ACTIONS_TOKEN }}
           lcov-file: ./coverage/lcov.info
           filter-changed-files: true
 
@@ -72,7 +71,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref_type == 'tag'
         with:
-          github_token: ${{ secrets.GH_ACTIONS_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./coverage/lcov-report
           user_name: 'github-actions[bot]'
@@ -88,7 +86,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/stable'
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: ${{ env.ORPHAN_BRANCH }}
           publish_dir: ./dist
           user_name: 'github-actions[bot]'
