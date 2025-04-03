@@ -1,0 +1,97 @@
+name: main_with_package_stable_action
+permissions:
+  contents: write
+  pull-requests: write
+  pages: write
+
+on:
+  workflow_dispatch:
+  # Triggers the workflow on push or pull request events but only for the prod branch
+  push:
+    branches:
+      - stable
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      UMAMI_SERVER: ${{secrets.UMAMI_SERVER}}
+      UMAMI_USER: ${{secrets.UMAMI_USER}}
+      UMAMI_PASSWORD: ${{secrets.UMAMI_PASSWORD}}
+      UMAMI_SITE_DOMAIN: ${{secrets.UMAMI_SITE_DOMAIN}}
+    strategy:
+      matrix:
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [20.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get orphan branch name from package.json using 'orphanBranch' key
+        id: get_branch
+        run: echo "ORPHAN_BRANCH=$(jq -r .orphanBranch package.json)" >> $GITHUB_ENV
+
+      # https://github.com/pnpm/action-setup
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: |
+          echo "Installing dependencies..."
+          pnpm install --frozen-lockfile
+
+      # skip node_modules in git using @vercel/ncc to package action
+      - name: Install vercel/ncc for package step
+        run: pnpm install -g @vercel/ncc
+        if: github.ref == 'refs/heads/stable'
+
+      - name: TEST run ci-tests with c8 code coverage
+        run: pnpm run ci-test
+
+      - name: Report coverage on pull request
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        # uses: romeovs/lcov-reporter-action@v0.2.16 # https://github.com/romeovs/lcov-reporter-action/issues/10
+        uses: andybelltree/lcov-reporter-action@v1.7.0 # https://github.com/andybelltree/lcov-reporter-action/releases
+        with:
+          github-token: ${{ secrets.GH_ACTIONS_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+          filter-changed-files: true
+
+      - name: Git deploy tag coverage report on github pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref_type == 'tag'
+        with:
+          github_token: ${{ secrets.GH_ACTIONS_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./coverage/lcov-report
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: ${{ github.event.head_commit.message }}
+          force_orphan: true
+
+      - name: PACKAGE app - action autonomous package with deps in dist/
+        if: github.ref == 'refs/heads/stable'
+        run: ./.github/scripts/package.sh
+
+      - name: DEPLOY package - push dist/ on target orphan branch '${{ env.ORPHAN_BRANCH }}'
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/stable'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: ${{ env.ORPHAN_BRANCH }}
+          publish_dir: ./dist
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: ${{ github.ref }} commit ${{ github.sha}}
+          force_orphan: true
