@@ -17,9 +17,9 @@ jobs:
     #      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
     #      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
     steps:
-      - name: QA Umami report
+      - name: QA Umami report - orphanBranch=main-version
         id: umamiReportStep
-        uses: boly38/action-umami-report@main
+        uses: boly38/action-umami-report@main-version
         with:
           umami-server: https://${{ secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
