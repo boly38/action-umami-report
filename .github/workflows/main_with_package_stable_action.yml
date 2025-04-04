@@ -11,6 +11,8 @@ on:
     branches:
       - stable
   pull_request:
+    paths:
+      - 'lib/**'
 
 jobs:
   build:
