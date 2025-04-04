@@ -56,7 +56,7 @@ jobs:
         id: umamiReport
         uses: boly38/action-umami-report@umami-server-2.17.0
         with:
-          umami-server: https://${{secrets.UMAMI_SERVER}}
+          umami-server: ${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
           umami-password: ${{secrets.UMAMI_PASSWORD}}
           umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
