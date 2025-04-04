@@ -23,45 +23,37 @@ jobs:
       UMAMI_USER: ${{secrets.UMAMI_USER}}
       UMAMI_PASSWORD: ${{secrets.UMAMI_PASSWORD}}
       UMAMI_SITE_DOMAIN: ${{secrets.UMAMI_SITE_DOMAIN}}
+      MUST_BE_PACKAGED: ${{ github.ref == 'refs/heads/stable' || github.ref == 'refs/heads/main' }}
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [20.x]
     steps:
-      - name: Checkout
+      - name: SETUP - Checkout
         uses: actions/checkout@v4
 
-      - name: Get orphan branch name from package.json using 'orphanBranch' key
-        id: get_branch
-        run: echo "ORPHAN_BRANCH=$(jq -r .orphanBranch package.json)" >> $GITHUB_ENV
-
       # https://github.com/pnpm/action-setup
-      - name: Install pnpm
+      - name: SETUP - Install pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      - name: Install Node.js ${{ matrix.node-version }}
+      - name: SETUP - Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies
+      - name: SETUP - Install dependencies
         run: |
           echo "Installing dependencies..."
           pnpm install --frozen-lockfile
 
-      # skip node_modules in git using @vercel/ncc to package action
-      - name: Install vercel/ncc for package step
-        run: pnpm install -g @vercel/ncc
-        if: github.ref == 'refs/heads/stable'
-
-      - name: TEST run ci-tests with c8 code coverage
+      - name: TEST - run ci-tests with c8 code coverage
         run: MOCHA_TIMEOUT=10000 pnpm run ci-test
 
-      - name: Report coverage on pull request
+      - name: COVERAGE - Report coverage on pull request
         if: github.event_name == 'pull_request'
         continue-on-error: true
         # uses: romeovs/lcov-reporter-action@v0.2.16 # https://github.com/romeovs/lcov-reporter-action/issues/10
@@ -70,7 +62,7 @@ jobs:
           lcov-file: ./coverage/lcov.info
           filter-changed-files: true
 
-      - name: Git deploy tag coverage report on github pages
+      - name: COVERAGE - Deploy tag coverage report on Github Pages
         uses: peaceiris/actions-gh-pages@v3
         if: github.ref_type == 'tag'
         with:
@@ -81,15 +73,32 @@ jobs:
           commit_message: ${{ github.event.head_commit.message }}
           force_orphan: true
 
-      - name: PACKAGE app - action autonomous package with deps in dist/
-        if: github.ref == 'refs/heads/stable' || github.ref == 'refs/heads/main'
+      # skip node_modules in git using @vercel/ncc to package action
+      - name: PACKAGE - SETUP - Install vercel/ncc for package step
+        run: pnpm install -g @vercel/ncc
+        if: env.MUST_BE_PACKAGED == 'true'
+
+      - name: PACKAGE - SETUP - Define ORPHAN_BRANCH name
+        id: get_branch
+        if: env.MUST_BE_PACKAGED == 'true'
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+          echo "ORPHAN_BRANCH=main-version" >> $GITHUB_ENV
+          else
+          echo "ORPHAN_BRANCH=$(jq -r .orphanBranch package.json)" >> $GITHUB_ENV
+          fi
+        # nb: jq extracts from package.json using 'orphanBranch' as key
+        # warn: dont target 'main' as orphan branch
+
+      - name: PACKAGE - BUILD - autonomous package Action with deps in dist/
+        if: env.MUST_BE_PACKAGED == 'true'
         run: ./.github/scripts/package.sh
 
-      - name: DEPLOY package - push dist/ on target orphan branch ${{ github.ref == 'refs/heads/main' && 'main-version' || env.ORPHAN_BRANCH }}
+      - name: DEPLOY package - push dist/ on target orphan branch ${{ env.ORPHAN_BRANCH }}
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/stable'
+        if: env.MUST_BE_PACKAGED == 'true'
         with:
-          publish_branch: ${{ github.ref == 'refs/heads/main' && 'main-version' || env.ORPHAN_BRANCH }}
+          publish_branch: ${{ env.ORPHAN_BRANCH }}
           publish_dir: ./dist
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
