@@ -51,6 +51,8 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: TEST - run ci-tests with c8 code coverage
+        env:
+          UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
         run: pnpm run ci-test
 
       - name: COVERAGE - Report coverage on pull request
