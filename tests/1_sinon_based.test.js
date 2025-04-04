@@ -21,7 +21,7 @@ describe("Test action-umami-report sinon based githubActionReport", function () 
         getBooleanInputStub.restore();
     });
 
-    it("should report using default options (1day)", async function () {
+    it("should githubActionReport using default options (1day)", async function () {
         getInputStub.withArgs('umami-server').returns(env["UMAMI_SERVER"]);
         getInputStub.withArgs('umami-user').returns(env["UMAMI_USER"]);
         getInputStub.withArgs('umami-password').returns(env["UMAMI_PASSWORD"]);
