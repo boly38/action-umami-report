@@ -1,0 +1,72 @@
+name: manual_qa
+permissions:
+  contents: none
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  umamiReportJob:
+    name: Manual QA action-umami-report
+    runs-on: ubuntu-latest
+
+    outputs:
+      umami_page_views: ${{ steps.umamiReportStep.outputs.pageViews }}
+      umami_report_file: ${{ steps.umamiReportStep.outputs.umamiReportFile }}
+    #      umami_report: ${{ steps.umamiReport.outputs.umamiReport }}
+    #      umami_one_line_report: ${{ steps.umamiReport.outputs.umamiOneLineReport }}
+    steps:
+      - name: QA Umami report
+        id: umamiReportStep
+        uses: boly38/action-umami-report@{{secrets.UMAMI_QA_BRANCH_NAME}}
+        with:
+          umami-server: https://${{ secrets.UMAMI_SERVER}}
+          umami-user: ${{secrets.UMAMI_USERNAME}}
+          umami-password: ${{secrets.UMAMI_PASSWORD}}
+          umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
+          umami-report-file: 'umamiReport.txt'
+        env:
+          UMAMI_CLIENT_TIMEOUT_MS: 5000
+
+      - name: Assume umamiReportFile exists
+        run: |
+          if [[ -z "${{ steps.umamiReportStep.outputs.umamiReportFile }}" ]]; then
+            echo "❌ Error : no umamiReportFile"
+            exit 1
+          fi
+
+      - name: Send Umami report to discord channel as embed when small enough
+        uses: tsickert/discord-webhook@v4.0.0
+        if: ${{ steps.umamiReportStep.outputs.umamiReportLength < 4096 }}
+        with:
+          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
+          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
+          embed-title: "Umami report"
+          username: "umami report"
+          embed-description: "${{ steps.umamiReportStep.outputs.umamiReport }}"
+          embed-thumbnail-url: "https://umami.my-example.com"
+          embed-image-url: "https://raw.githubusercontent.com/umami-software/website/master/assets/logo.svg"
+
+      - name: Send Umami report to discord channel as file when big
+        uses: tsickert/discord-webhook@v4.0.0
+        if: ${{ steps.umamiReportStep.outputs.umamiReportLength >= 4096 }}
+        with:
+          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
+          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
+          username: "umami report"
+          filename: ${{ steps.umamiReportStep.outputs.umamiReportFile }}
+
+      - name: Have a look at !secret results from next step using outputs
+        run: |
+          echo "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
+          ls -la "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
+
+  nextJob:
+    needs: umamiReportJob
+    name: github action next job
+    runs-on: ubuntu-latest
+    steps:
+      - name: print var
+        run: |
+          echo "FROM umamiReport outputs: ${{ needs.umamiReportJob.outputs.umami_report_file }} and ${{ needs.umamiReportJob.outputs.umami_page_views }} pageviews "
