@@ -1,4 +1,4 @@
-name: main_with_package_stable_action
+name: main_ci_and_package_action
 permissions:
   contents: write
   pull-requests: write
@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - stable
+      - main
   pull_request:
     paths:
       - 'lib/**'
@@ -81,16 +82,16 @@ jobs:
           force_orphan: true
 
       - name: PACKAGE app - action autonomous package with deps in dist/
-        if: github.ref == 'refs/heads/stable'
+        if: github.ref == 'refs/heads/stable' || github.ref == 'refs/heads/main'
         run: ./.github/scripts/package.sh
 
-      - name: DEPLOY package - push dist/ on target orphan branch '${{ env.ORPHAN_BRANCH }}'
+      - name: DEPLOY package - push dist/ on target orphan branch ${{ github.ref == 'refs/heads/main' && 'main-version' || env.ORPHAN_BRANCH }}
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/stable'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/stable'
         with:
-          publish_branch: ${{ env.ORPHAN_BRANCH }}
+          publish_branch: ${{ github.ref == 'refs/heads/main' && 'main-version' || env.ORPHAN_BRANCH }}
           publish_dir: ./dist
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: ${{ github.ref }} commit ${{ github.sha}}
+          commit_message: ${{ github.ref }} commit ${{ github.sha }}
           force_orphan: true
