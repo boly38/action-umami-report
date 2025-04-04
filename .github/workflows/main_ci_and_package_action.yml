@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       UMAMI_SERVER: ${{secrets.UMAMI_SERVER}}
-      UMAMI_USER: ${{secrets.UMAMI_USER}}
+      UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
       UMAMI_PASSWORD: ${{secrets.UMAMI_PASSWORD}}
       UMAMI_SITE_DOMAIN: ${{secrets.UMAMI_SITE_DOMAIN}}
       MUST_BE_PACKAGED: ${{ github.ref == 'refs/heads/stable' || github.ref == 'refs/heads/main' }}
