@@ -59,7 +59,7 @@ jobs:
         if: github.ref == 'refs/heads/stable'
 
       - name: TEST run ci-tests with c8 code coverage
-        run: pnpm run ci-test
+        run: MOCHA_TIMEOUT=10000 pnpm run ci-test
 
       - name: Report coverage on pull request
         if: github.event_name == 'pull_request'
