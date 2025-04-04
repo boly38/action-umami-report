@@ -51,7 +51,7 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: TEST - run ci-tests with c8 code coverage
-        run: MOCHA_TIMEOUT=10000 pnpm run ci-test
+        run: pnpm run ci-test
 
       - name: COVERAGE - Report coverage on pull request
         if: github.event_name == 'pull_request'
