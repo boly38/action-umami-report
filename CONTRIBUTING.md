@@ -52,3 +52,17 @@ pnpm install -g @vercel/ncc
 ncc build index.js
 # package result under dist/
 ````
+
+## HowTo release using Gren
+
+```bash
+# provide PAT with permissions to create release on current repository
+export GREN_GITHUB_TOKEN=your_token_here
+pnpm i -g github-release-notes@latest
+
+git fetch --all && git pull
+# make a release vX with all history
+gren release --data-source=prs -t v2.2.2 --milestone-match=v2.2.2
+# overrides release vX with history from vX-1
+gren release --data-source=prs -t "v2.2.2..v2.2.1" --milestone-match="v2.2.2" --override
+```
