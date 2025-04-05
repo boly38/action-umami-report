@@ -39,5 +39,4 @@ jobs:
           git fetch --all
           git checkout main
           pnpm version patch
-          git branch -f npmjs
-          git push origin main npmjs --tags
+          git push origin main --tags
