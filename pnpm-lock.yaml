@@ -21,8 +21,8 @@ importers:
         specifier: ^1.11.13
         version: 1.11.13
       umami-api-client:
-        specifier: ^2.17.0
-        version: 2.17.0
+        specifier: ^2.17.1
+        version: 2.17.1
     devDependencies:
       c8:
         specifier: ^10.1.3
@@ -734,8 +734,8 @@ packages:
     resolution: {integrity: sha512-Acylog8/luQ8L7il+geoSxhEkazvkslg7PSNKOX59mbB9cOveP5aq9h74Y7YU8yDpJwetzQQrfIwtf4Wp4LKcw==}
     engines: {node: '>=4'}
 
-  umami-api-client@2.17.0:
-    resolution: {integrity: sha512-CJDTx2cQhCStGjPcXhXL87PP2w2K4LdMToKUfaPdU5BiR66DsR1TwPqfG0ecS1XWbtHOhxbFTcbL+2O2wwOA+g==}
+  umami-api-client@2.17.1:
+    resolution: {integrity: sha512-g7q7iLnthip31A7RdiM58Svh5O0k+xircKtAz94he4rqJO8tnmnzDRw/mQYdvvMtyymZ7djo6xIowF1yzJVIxA==}
 
   undici@5.29.0:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
@@ -1490,7 +1490,7 @@ snapshots:
 
   type-detect@4.1.0: {}
 
-  umami-api-client@2.17.0:
+  umami-api-client@2.17.1:
     dependencies:
       node-fetch: 3.3.2
       query-string: 8.2.0
