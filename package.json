@@ -35,6 +35,7 @@
   "doc": {
     "setup": "pnpm install",
     "ci-test": "c8 config file is .nycrc.json",
+    "single test": "tst=2_sinon_cloud_umami pnpm run tst",
     "debug-mode": "export UMAMI_DEBUG_ACTION=true"
   },
   "scripts": {
@@ -55,7 +56,7 @@
     "@actions/github": "^6.0.0",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
-    "umami-api-client": "^2.17.0"
+    "umami-api-client": "^2.17.1"
   },
   "devDependencies": {
     "c8": "^10.1.3",

@@ -8,9 +8,10 @@ Accepted periods are: 1h, 1d, 1w, 1m.
 
 | input name             | required | description                             |
 |------------------------|----------|-----------------------------------------|
-| `umami-server`         | yes      | Umami server instance (*).              |
-| `umami-user`           | yes      | Umami API user. Default `"admin"`.      | 
-| `umami-password`       | yes      | Umami API password.                     | 
+| `umami-cloud-api-key`  | (1)      | Umami Cloud API key .                   |
+| `umami-server`         | (2)      | Umami server instance .                 |
+| `umami-user`           | (2)      | Umami API user. Default `"admin"`.      | 
+| `umami-password`       | (2)      | Umami API password.                     | 
 | `umami-site-domain`    | no       | Umami site domain name (*).             | 
 | `umami-report-file`    | no       | Umami report file to generate.          | 
 | `umami-report-content` | no       | Report content to generate (*).         | 
@@ -18,19 +19,27 @@ Accepted periods are: 1h, 1d, 1w, 1m.
 | `umami-unit`           | no       | (main) Report interval unit (*).        | 
 | `umami-tz`             | no       | (main) Report date time timezone (*).   | 
 
-legend*:
-- [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
+legend(1)(2):
+
+- (1) `umami-cloud-api-key` is required for Umami [CLOUD](https://cloud.umami.is/) mode ([create yours](https://cloud.umami.is/api-keys))
+- (2) `umami-server` `umami-user` `umami-password` is required for Umami Hosted mode
+- (2) [Umami API](https://umami.is/docs/api) login expected to be available at `<umami-server>/api/auth/login`.
+
+  legend*:
 - `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
 - `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
 - `umami-period` default is `24h` (means 24 hours). But you can switch it to `24h`/`7d`/`1w`/`31d`/`1m`.
 - `umami-unit` default is `hour`. But you can switch it to `day` depend on the period you choose.
-- `umami-tz` default is `Europe/Paris`. But you can switch it to another timezone supported by Umami API (ex. `America/Los_Angeles`).
+- `umami-tz` default is `Europe/Paris`. But you can switch it to another timezone supported by Umami API (ex.
+  `America/Los_Angeles`).
 
 ## Action outputs
 
 This action produces some "action results" where an action result is a `resultName`, and a `resultValue`.
 
-Each action result is available as [output parameter](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) : to use in following `step` or`job`
+Each action result is available
+as [output parameter](https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter) :
+to use in following `step` or`job`
 
 | resultName           | resultValue        | description                     |
 |----------------------|--------------------|---------------------------------|
@@ -68,33 +77,40 @@ jobs:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
           content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
 ```
+
 Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_report.yml)
 
-**TIP**: if your umami server version is not compatible with current GithubActions, you could change `umami-server-2.17.0` keyword by one of the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format. 
+**TIP**: if your umami server version is not compatible with current GithubActions, you could change
+`umami-server-2.17.0` keyword by one of
+the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format.
 
 # See also
 
 ## Umami
+
 Umami server : [API](https://umami.is/docs/api) - [source](https://github.com/umami-software/umami)
 
 Umami API clients:
+
 - jakobbouchard TS/JS [umami-api-client](https://github.com/jakobbouchard/umami-api-client)
-  - Import: `import UmamiApiClient from 'umami-api'`
+    - Import: `import UmamiApiClient from 'umami-api'`
 - boly38 JS [umami-api-client](https://github.com/boly38/umami-api-client)
-  - Import: `import UmamiClient from 'umami-api-client'` 
+    - Import: `import UmamiClient from 'umami-api-client'`
 
 ## possible next step
-- send the report [by email](https://github.com/marketplace?type=actions&query=mail+), on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
 
+- send the report [by email](https://github.com/marketplace?type=actions&query=mail+),
+  on [discord](https://github.com/marketplace?type=actions&query=discord+), etc..
 
 ### Services or activated bots
 
 - [Github actions](https://github.com/features/actions) - Continuous vulnerability audit.<br/>
-[![scheduled npm audit](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml/badge.svg)](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml)
- 
-- [Houndci](https://houndci.com/) - JavaScript  automated review (configured by [`.hound.yml`](./.hound.yml)).<br/>
-[<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="100">](https://houndci.com/)
+  [![scheduled npm audit](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml/badge.svg)](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml)
 
-- [gren](https://github.com/github-tools/github-release-notes) - [Release notes](https://github.com/boly38/action-umami-report/releases) automation.<br/>
-[![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
+- [Houndci](https://houndci.com/) - JavaScript automated review (configured by [`.hound.yml`](./.hound.yml)).<br/>
+  [<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="100">](https://houndci.com/)
+
+- [gren](https://github.com/github-tools/github-release-notes) - [Release notes](https://github.com/boly38/action-umami-report/releases)
+  automation.<br/>
+  [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
 

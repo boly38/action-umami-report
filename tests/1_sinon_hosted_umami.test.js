@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import UmamiReport from "../lib/umamiReport.js";
 import {verboseStringify} from "./testUtil.js";
 
-describe("Test action-umami-report sinon based githubActionReport", function () {
+describe("Test action-umami-report sinon based hosted githubActionReport", function () {
     let getInputStub;
     let getBooleanInputStub;
 
@@ -21,16 +21,17 @@ describe("Test action-umami-report sinon based githubActionReport", function () 
         getBooleanInputStub.restore();
     });
 
-    it("should githubActionReport using default options (1day)", async function () {
-        getInputStub.withArgs('umami-server').returns(env["UMAMI_SERVER"]);
-        getInputStub.withArgs('umami-user').returns(env["UMAMI_USER"]);
-        getInputStub.withArgs('umami-password').returns(env["UMAMI_PASSWORD"]);
-        getInputStub.withArgs('umami-site-domain').returns(env["UMAMI_SITE_DOMAIN"]);
+    it("should report from hosted umami server with default options (1day)", async function () {
+        getInputStub.withArgs('umami-server').returns(env["UMAMI_TEST_SERVER"]);
+        getInputStub.withArgs('umami-user').returns(env["UMAMI_TEST_USER"]);
+        getInputStub.withArgs('umami-password').returns(env["UMAMI_TEST_PASSWORD"]);
+        getInputStub.withArgs('umami-site-domain').returns(env["UMAMI_TEST_SITE_DOMAIN"]);
         getBooleanInputStub.withArgs('umami-prefetch', false).returns(false);
 
         await UmamiReport.githubActionReport()
             .then(verboseStringify).catch(console.error);
     });
+
 
 
 });
