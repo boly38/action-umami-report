@@ -104,13 +104,14 @@ Umami API clients:
 
 ### Services or activated bots
 
-- [Github actions](https://github.com/features/actions) - Continuous vulnerability audit.<br/>
-  [![scheduled npm audit](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml/badge.svg)](https://github.com/boly38/action-umami-report/actions/workflows/audit.yml)
+| ![CI/CD](https://github.com/boly38/action-umami-report/workflows/main_ci_and_package_action/badge.svg) | [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/) | [<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="40">](https://houndci.com/) | [<img src="https://codetheweb.blog/assets/img/posts/github-pages-free-hosting/cover.png" width="100">](https://boly38.github.io/action-umami-report/) |
+|------------------------------------------------------------------------------------------------| ---- | ---- | ---- |
 
-- [Houndci](https://houndci.com/) - JavaScript automated review (configured by [`.hound.yml`](./.hound.yml)).<br/>
-  [<img src="https://cdn.icon-icons.com/icons2/2148/PNG/512/houndci_icon_132320.png" width="100">](https://houndci.com/)
+- Github actions : continuous tests + coverage using [c8](https://www.npmjs.com/package/c8) reported on github pages [website](https://boly38.github.io/action-umami-report/)
+- Github security checks activated
+- [Houndci](https://houndci.com/) : JavaScript  automated review (configured by `.hound.yml`)
+- [gren](https://github.com/github-tools/github-release-notes) : [Release notes](https://github.com/boly38/action-umami-report/releases) automation
+- Github pages [website](https://boly38.github.io/action-umami-report/) hosts some metrics for the main branch of this project: [code coverage](https://boly38.github.io/action-umami-report/)
 
-- [gren](https://github.com/github-tools/github-release-notes) - [Release notes](https://github.com/boly38/action-umami-report/releases)
-  automation.<br/>
-  [![Automated Release Notes by gren](https://img.shields.io/badge/%F0%9F%A4%96-release%20notes-00B2EE.svg)](https://github-tools.github.io/github-release-notes/)
+
 
