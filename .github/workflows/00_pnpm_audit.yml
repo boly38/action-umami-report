@@ -21,28 +21,35 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - name: Checkout code
+      - name: SETUP - Checkout
         uses: actions/checkout@v4
 
       # https://github.com/pnpm/action-setup
-      - name: Install pnpm
+      - name: SETUP - Install pnpm
         uses: pnpm/action-setup@v4
         with:
           run_install: false
 
-      - name: Install Node.js ${{ matrix.node-version }}
+      - name: SETUP - Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
           cache-dependency-path: pnpm-lock.yaml
 
-      - name: Install dependencies
+      - name: SETUP - Install dependencies
         run: |
           echo "Installing dependencies..."
           pnpm install --frozen-lockfile
-          echo "Checking for outdated dependencies..."
-          pnpm outdated && echo "Dependencies are up to date 🎉"
 
-      - name: Run pnpm audit
+      - name: CHECK - Check for outdated dependencies (non-blocking warning)
+        run: |
+          echo "🔍 Checking for outdated dependencies..."
+          if pnpm outdated; then
+            echo "✅ Dependencies are up to date 🎉"
+          else
+            echo "::warning title=Outdated Dependencies::Some dependencies are outdated. Please consider updating them."
+          fi
+
+      - name: CHECK - Run pnpm audit
         run: pnpm audit --json # --audit-level moderate

@@ -4,7 +4,7 @@ import {describe, before, it} from "mocha";
 
 let options;
 
-describe("Test action-umami-report env based manual cases", function () {
+describe("Env based tests", function () {
     before(function () {
             try {
                 options = UmamiReport.getOptions();

@@ -25,9 +25,9 @@ export UMAMI_CLOUD_API_KEY=api_xxxyyyzzz
 export UMAMI_CLOUD_SITE_DOMAIN="*first*"
 
 
-### Dev debug API
-# export UMAMI_DEBUG_RESPONSE=true
-# export UMAMI_DEBUG_REQUEST=true
 
+### Dev debug API
+# export UMAMI_CLIENT_DEBUG_RESPONSE=true
+# export UMAMI_CLIENT_DEBUG_REQUEST=true
 ### Dev debug Action
 # export UMAMI_DEBUG_ACTION=true

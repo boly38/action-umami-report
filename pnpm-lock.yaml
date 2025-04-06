@@ -21,8 +21,8 @@ importers:
         specifier: ^1.11.13
         version: 1.11.13
       umami-api-client:
-        specifier: ^2.17.1
-        version: 2.17.1
+        specifier: ^2.17.3
+        version: 2.17.3
     devDependencies:
       c8:
         specifier: ^10.1.3
@@ -643,9 +643,9 @@ packages:
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
-  query-string@8.2.0:
-    resolution: {integrity: sha512-tUZIw8J0CawM5wyGBiDOAp7ObdRQh4uBor/fUR9ZjmbZVvw95OD9If4w3MQxr99rg0DJZ/9CIORcpEqU5hQG7g==}
-    engines: {node: '>=14.16'}
+  query-string@9.1.1:
+    resolution: {integrity: sha512-MWkCOVIcJP9QSKU52Ngow6bsAWAPlPK2MludXvcrS2bGZSl+T1qX9MZvRIkqUIkGLJquMJHWfsT6eRqUpp4aWg==}
+    engines: {node: '>=18'}
 
   randombytes@2.1.0:
     resolution: {integrity: sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==}
@@ -760,8 +760,8 @@ packages:
     resolution: {integrity: sha512-Acylog8/luQ8L7il+geoSxhEkazvkslg7PSNKOX59mbB9cOveP5aq9h74Y7YU8yDpJwetzQQrfIwtf4Wp4LKcw==}
     engines: {node: '>=4'}
 
-  umami-api-client@2.17.1:
-    resolution: {integrity: sha512-g7q7iLnthip31A7RdiM58Svh5O0k+xircKtAz94he4rqJO8tnmnzDRw/mQYdvvMtyymZ7djo6xIowF1yzJVIxA==}
+  umami-api-client@2.17.3:
+    resolution: {integrity: sha512-KNSz9ZU+ew9x8vyKEtHTOggNYL+wM6NG8Kesz8GaBZMNBtMPND/hhzfSi6kaH7wXYHBA4rMQ6RVrQxZtTNFG8g==}
 
   undici@5.29.0:
     resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
@@ -1424,7 +1424,7 @@ snapshots:
 
   proxy-from-env@1.1.0: {}
 
-  query-string@8.2.0:
+  query-string@9.1.1:
     dependencies:
       decode-uri-component: 0.4.1
       filter-obj: 5.1.0
@@ -1534,10 +1534,10 @@ snapshots:
 
   type-detect@4.1.0: {}
 
-  umami-api-client@2.17.1:
+  umami-api-client@2.17.3:
     dependencies:
       node-fetch: 3.3.2
-      query-string: 8.2.0
+      query-string: 9.1.1
       winston: 3.17.0
 
   undici@5.29.0:
