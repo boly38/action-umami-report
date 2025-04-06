@@ -1,4 +1,4 @@
-name: main_manual_qa
+name: main_manual_qa_cloud
 permissions:
   contents: none
 
@@ -8,7 +8,7 @@ on:
 
 jobs:
   umamiReportJob:
-    name: Manual QA action-umami-report@main
+    name: Manual QA Umami Cloud action-umami-report@main-version
     runs-on: ubuntu-latest
 
     outputs:
@@ -21,10 +21,8 @@ jobs:
         id: umamiReportStep
         uses: boly38/action-umami-report@main-version
         with:
-          umami-server: ${{secrets.UMAMI_SERVER}}
-          umami-user: ${{secrets.UMAMI_USERNAME}}
-          umami-password: ${{secrets.UMAMI_PASSWORD}}
-          umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
+          umami-cloud-api-key: ${{secrets.UMAMI_TEST_CLOUD_API_KEY}}
+          umami-site-domain: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
           umami-report-file: 'umamiReport.txt'
         env:
           UMAMI_CLIENT_TIMEOUT_MS: 5000

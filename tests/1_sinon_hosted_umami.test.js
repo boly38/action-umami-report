@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import UmamiReport from "../lib/umamiReport.js";
 import {verboseStringify} from "./testUtil.js";
 
-describe("Test action-umami-report sinon based hosted githubActionReport", function () {
+describe("Sinon hosted tests", function () {
     let getInputStub;
     let getBooleanInputStub;
 

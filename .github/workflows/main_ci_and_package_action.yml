@@ -53,6 +53,12 @@ jobs:
       - name: TEST - run ci-tests with c8 code coverage
         env:
           UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
+          UMAMI_TEST_SERVER: ${{secrets.UMAMI_USERNAME}}
+          UMAMI_TEST_USER: ${{secrets.UMAMI_TEST_USER}}
+          UMAMI_TEST_PASSWORD: ${{secrets.UMAMI_TEST_PASSWORD}}
+          UMAMI_TEST_SITE_DOMAIN: ${{secrets.UMAMI_TEST_SITE_DOMAIN}}
+          UMAMI_TEST_CLOUD_API_KEY: ${{secrets.UMAMI_TEST_CLOUD_API_KEY}}
+          UMAMI_TEST_CLOUD_SITE_DOMAIN: ${{secrets.UMAMI_TEST_CLOUD_SITE_DOMAIN}}
         run: pnpm run ci-test
 
       - name: COVERAGE - Report coverage on pull request

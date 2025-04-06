@@ -27,7 +27,7 @@ legend(1)(2):
 
   legend*:
 - `umami-site-domain` is the target analysis domain name, example `"www.mysite.com"` (select first domain by default ).
-- `umami-report-content` default is `pageviews|events|urls` (stats is always reported).
+- `umami-report-content` default is `pageviews|events|sessions|urls` (stats is always reported).
 - `umami-period` default is `24h` (means 24 hours). But you can switch it to `24h`/`7d`/`1w`/`31d`/`1m`.
 - `umami-unit` default is `hour`. But you can switch it to `day` depend on the period you choose.
 - `umami-tz` default is `Europe/Paris`. But you can switch it to another timezone supported by Umami API (ex.
