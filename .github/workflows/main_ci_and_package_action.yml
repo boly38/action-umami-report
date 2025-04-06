@@ -66,7 +66,7 @@ jobs:
 
       - name: COVERAGE - Deploy tag coverage report on Github Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref_type == 'tag'
+        if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
