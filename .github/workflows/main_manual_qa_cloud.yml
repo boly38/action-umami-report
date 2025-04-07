@@ -42,10 +42,10 @@ jobs:
           content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
           embed-title: "Umami report"
           username: "umami report"
-          embed-description: |
-              ${{ steps.umamiReportStep.outputs.umamiReport }}
-          embed-thumbnail-url: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
           embed-image-url: "https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png"
+          embed-thumbnail-url: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
+          embed-description: |
+              "${{ steps.umamiReportStep.outputs.umamiReport }}"
 
       - name: Send Umami report to discord channel as file when big
         uses: tsickert/discord-webhook@v4.0.0
