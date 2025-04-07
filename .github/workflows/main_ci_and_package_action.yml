@@ -53,7 +53,7 @@ jobs:
       - name: TEST - run ci-tests with c8 code coverage
         env:
           UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
-          UMAMI_TEST_SERVER: ${{secrets.UMAMI_USERNAME}}
+          UMAMI_TEST_SERVER: ${{secrets.UMAMI_TEST_SERVER}}
           UMAMI_TEST_USER: ${{secrets.UMAMI_TEST_USER}}
           UMAMI_TEST_PASSWORD: ${{secrets.UMAMI_TEST_PASSWORD}}
           UMAMI_TEST_SITE_DOMAIN: ${{secrets.UMAMI_TEST_SITE_DOMAIN}}

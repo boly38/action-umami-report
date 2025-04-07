@@ -4,7 +4,7 @@ import core from '@actions/core';
 import sinon from 'sinon';
 
 import UmamiReport from "../lib/umamiReport.js";
-import {verboseStringify} from "./testUtil.js";
+import {expectNoError, verboseStringify} from "./testUtil.js";
 
 describe("Sinon based cloud tests", function () {
     let getInputStub;
@@ -27,7 +27,10 @@ describe("Sinon based cloud tests", function () {
         getBooleanInputStub.withArgs('umami-prefetch', false).returns(false);
 
         await UmamiReport.githubActionReport()
-            .then(verboseStringify).catch(console.error);
+            .then(result => {
+                expectNoError(result.error);
+            })
+            .catch(expectNoError);
     });
 
 
