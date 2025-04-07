@@ -39,9 +39,8 @@ jobs:
         if: ${{ steps.umamiReportStep.outputs.umamiReportLength < 4096 }}
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
-          embed-title: "Umami report"
-          username: "umami report"
+          embed-title: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+          username: "Umami report"
           embed-image-url: "https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png"
           embed-thumbnail-url: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
           embed-description: |
