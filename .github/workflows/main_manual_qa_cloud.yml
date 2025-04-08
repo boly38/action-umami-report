@@ -10,6 +10,8 @@ jobs:
   umamiReportJob:
     name: Manual QA Umami Cloud action-umami-report@main-version
     runs-on: ubuntu-latest
+    env:
+      UMAMI_LOGO: https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png
 
     outputs:
       umami_page_views: ${{ steps.umamiReportStep.outputs.pageViews }}
@@ -34,27 +36,15 @@ jobs:
             exit 1
           fi
 
-      - name: Send Umami report to discord channel as embed when small enough
-        uses: tsickert/discord-webhook@v4.0.0
-        if: ${{ steps.umamiReportStep.outputs.umamiReportLength < 4096 }}
+      - name: Send Umami report to discord
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          embed-title: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
           username: "Umami report"
-          embed-image-url: "https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png"
-          embed-thumbnail-url: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
-          embed-description: |
-              "${{ steps.umamiReportStep.outputs.umamiReport }}"
-
-      - name: Send Umami report to discord channel as file when big
-        uses: tsickert/discord-webhook@v4.0.0
-        if: ${{ steps.umamiReportStep.outputs.umamiReportLength >= 4096 }}
-        with:
-          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
-          username: "umami report"
-          filename: ${{ steps.umamiReportStep.outputs.umamiReportFile }}
-
+          avatar-url: ${{ env.UMAMI_LOGO }}
+          content: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+          filename: "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
+9
       - name: Have a look at !secret results from next step using outputs
         run: |
           echo "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
