@@ -5,15 +5,18 @@ branding:
   color: green
 author: boly38
 inputs:
+  umami-cloud-api-key:
+    description: (1) The umami CLOUD apiKey. If set, this masks input with "(2)" flag
+    required: false
   umami-server:
-    description: The umami server instance.
-    required: true
+    description: (2) The umami Hosted server instance.
+    required: false
   umami-user:
-    description: The umami server instance user
-    required: true
+    description: (2) The umami Hosted server instance user
+    required: false
   umami-password:
-    description: The umami server instance password
-    required: true
+    description: (2) The umami Hosted server instance password
+    required: false
   umami-site-domain:
     description: The umami site domain name
     default: ''
