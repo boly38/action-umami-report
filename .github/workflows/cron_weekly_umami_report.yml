@@ -1,0 +1,53 @@
+name: weekly-umami-report
+permissions:
+  contents: none
+
+on:
+  schedule:
+    # “At 23:59 on Sunday.”
+    - cron: '59 23 * * 0'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  umamiReportJob:
+    name: weekly umami report
+    runs-on: ubuntu-latest
+    env:
+      UMAMI_LOGO: https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png
+
+    steps:
+      - name: Create Weekly Umami report
+        id: umamiReportStep
+        uses: boly38/action-umami-report@umami-server-2.17.0
+        with:
+          umami-server: ${{secrets.UMAMI_SERVER}}
+          umami-user: ${{secrets.UMAMI_USERNAME}}
+          umami-password: ${{secrets.UMAMI_PASSWORD}}
+          umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
+          umami-report-file: 'umamiReport.txt'
+          umami-period: '1w'
+          umami-unit: 'day'
+          umami-tz: 'Europe/Paris'
+
+      - name: Assume umamiReportFile exists and pageViews != 0
+        run: |
+          if [[ -z "${{ steps.umamiReportStep.outputs.umamiReportFile }}" ]]; then
+            echo "::error title=no umamiReportFile::❌ Error : no umamiReportFile"
+            exit 1
+          fi
+          if [[ "${{ steps.umamiReportStep.outputs.pageViews }}" == "0" ]]; then
+            echo "::notice title=no pageViews::ℹ️ pageViews=0 😞"
+            exit 0
+          fi
+          echo "::notice title=OneLineReport::ℹ️ ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+
+      - name: Send Umami Host report to discord if pageViews is positive
+        if: steps.umamiReportStep.outputs.pageViews != '0'
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
+          username: "Umami report"
+          avatar-url: ${{ env.UMAMI_LOGO }}
+          content: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+          filename: "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
