@@ -32,13 +32,14 @@ jobs:
       - name: Assume umamiReportFile exists and pageViews != 0
         run: |
           if [[ -z "${{ steps.umamiReportStep.outputs.umamiReportFile }}" ]]; then
-            echo "❌ Error : no umamiReportFile"
+            echo "::error title=no umamiReportFile::❌ Error : no umamiReportFile"
             exit 1
           fi
           if [[ "${{ steps.umamiReportStep.outputs.pageViews }}" == "0" ]]; then
-            echo "::warning title=ℹ️ pageViews=0 😞"
+            echo "::notice title=no pageViews::ℹ️ pageViews=0 😞"
             exit 0
           fi
+          echo "::notice title=OneLineReport::ℹ️ ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
 
       - name: Send Umami Cloud report to discord if pageViews is positive
         if: steps.umamiReportStep.outputs.pageViews != '0'
