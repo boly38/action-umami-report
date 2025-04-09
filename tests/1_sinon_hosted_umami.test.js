@@ -4,7 +4,7 @@ import core from '@actions/core';
 import sinon from 'sinon';
 
 import UmamiReport from "../lib/umamiReport.js";
-import {expectNoError, verboseStringify} from "./testUtil.js";
+import {expectNoError} from "./testUtil.js";
 
 describe("Sinon hosted tests", function () {
     let getInputStub;
