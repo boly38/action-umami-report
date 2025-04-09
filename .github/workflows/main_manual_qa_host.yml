@@ -38,7 +38,8 @@ jobs:
             exit 1
           fi
 
-      - name: Send Umami report to discord
+      - name: Send Umami Host report to discord if pageViews is positive
+        if: ${{ fromJSON(steps.umamiReportStep.outputs.pageViews) > 0 }}
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
