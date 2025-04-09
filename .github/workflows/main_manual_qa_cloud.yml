@@ -29,16 +29,20 @@ jobs:
         env:
           UMAMI_CLIENT_TIMEOUT_MS: 5000
 
-      - name: Assume umamiReportFile exists
+      - name: Assume umamiReportFile exists and pageViews != 0
         run: |
           if [[ -z "${{ steps.umamiReportStep.outputs.umamiReportFile }}" ]]; then
             echo "❌ Error : no umamiReportFile"
             exit 1
           fi
+          if [[ "${{ steps.umamiReportStep.outputs.pageViews }}" == "0" ]]; then
+            echo "::warning title=ℹ️ pageViews=0 😞"
+            exit 0
+          fi
 
       - name: Send Umami Cloud report to discord if pageViews is positive
+        if: steps.umamiReportStep.outputs.pageViews != '0'
         uses: tsickert/discord-webhook@v7.0.0
-        if: ${{ fromJSON(steps.umamiReportStep.outputs.pageViews) > 0 }}
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
           username: "Umami report"
