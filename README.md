@@ -71,14 +71,18 @@ jobs:
           umami-site-domain: ${{secrets.UMAMI_SITE_DOMAIN}}
           umami-report-file: 'umamiReport.md'
 
-      - name: Send Umami report to discord channel
-        uses: tsickert/discord-webhook@v4.0.0
+      - name: Send report to discord if pageViews is positive
+        if: steps.umamiReportStep.outputs.pageViews != '0'
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
+          username: "Umami report"
+          content: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+          filename: "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
+          # avatar-url: ..set user logo
 ```
 
-Full working sample: cf. [daily_umami_report.yml](.github/workflows/daily_umami_report.yml)
+cf. working sample: cf. [(full) daily yml](.github/workflows/cron_daily_umami_report.yml) or [(min) weekly yml](.github/workflows/cron_weekly_umami_report.yml)
 
 **TIP**: if your umami server version is not compatible with current GithubActions, you could change
 `umami-server-2.17.0` keyword by one of
@@ -92,10 +96,11 @@ Umami server : [API](https://umami.is/docs/api) - [source](https://github.com/um
 
 Umami API clients:
 
-- jakobbouchard TS/JS [umami-api-client](https://github.com/jakobbouchard/umami-api-client)
-    - Import: `import UmamiApiClient from 'umami-api'`
 - boly38 JS [umami-api-client](https://github.com/boly38/umami-api-client)
-    - Import: `import UmamiClient from 'umami-api-client'`
+  - Import: `import UmamiClient from 'umami-api-client'`
+- (archived) jakobbouchard TS/JS [umami-api-client](https://github.com/jakobbouchard/umami-api-client)
+  - Import: `import UmamiApiClient from 'umami-api'`
+
 
 ## possible next step
 

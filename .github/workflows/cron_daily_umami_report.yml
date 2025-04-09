@@ -12,6 +12,8 @@ jobs:
   umamiReportJob:
     name: daily umami report
     runs-on: ubuntu-latest
+    env:
+      UMAMI_LOGO: https://raw.githubusercontent.com/umami-software/website/refs/heads/master/public/images/umami-logo.png
 
     outputs:
       umami_page_views: ${{ steps.umamiReportStep.outputs.pageViews }}
@@ -31,26 +33,28 @@ jobs:
         env:
           UMAMI_CLIENT_TIMEOUT_MS: 5000
 
-      - name: Send Umami report to discord channel as embed when small enough
-        uses: tsickert/discord-webhook@v4.0.0
-        if: ${{ steps.umamiReportStep.outputs.umamiReportLength < 4096 }}
-        with:
-          webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
-          embed-title: "Umami report"
-          username: "umami report"
-          embed-description: "${{ steps.umamiReportStep.outputs.umamiReport }}"
-          embed-thumbnail-url: "https://umami.my-example.com"
-          embed-image-url: "https://raw.githubusercontent.com/umami-software/website/master/assets/logo.svg"
+      - name: Assume umamiReportFile exists and pageViews != 0
+        run: |
+          if [[ -z "${{ steps.umamiReportStep.outputs.umamiReportFile }}" ]]; then
+            echo "::error title=no umamiReportFile::❌ Error : no umamiReportFile"
+            exit 1
+          fi
+          if [[ "${{ steps.umamiReportStep.outputs.pageViews }}" == "0" ]]; then
+            echo "::notice title=no pageViews::ℹ️ pageViews=0 😞"
+            exit 0
+          fi
+          echo "::notice title=OneLineReport::ℹ️ ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
 
-      - name: Send Umami report to discord channel as file when big
-        uses: tsickert/discord-webhook@v4.0.0
-        if: ${{ steps.umamiReportStep.outputs.umamiReportLength >= 4096 }}
+
+      - name: Send Umami Host report to discord if pageViews is positive
+        if: steps.umamiReportStep.outputs.pageViews != '0'
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
-          content: ${{ steps.umamiReportStep.outputs.umamiOneLineReport }}
-          username: "umami report"
-          filename: ${{ steps.umamiReportStep.outputs.umamiReportFile }}
+          username: "Umami report"
+          avatar-url: ${{ env.UMAMI_LOGO }}
+          content: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
+          filename: "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
 
       - name: Have a look at !secret results from next step using outputs
         run: |

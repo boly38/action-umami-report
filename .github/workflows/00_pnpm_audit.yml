@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "🔍 Checking for outdated dependencies..."
           if pnpm outdated; then
-            echo "✅ Dependencies are up to date 🎉"
+            echo "::notice title=Deps OK::✅ Dependencies are up to date 🎉"
           else
             echo "::warning title=Outdated Dependencies::Some dependencies are outdated. Please consider updating them."
           fi
