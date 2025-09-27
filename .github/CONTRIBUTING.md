@@ -69,17 +69,16 @@ ncc build index.js
 
 For example the `umami-server-2.17.0` dist orphan branch used `last-umami-server-2.17.0` as source reference tag for the last packaging.
 
+## HowTo create a fresh version
+- install GitHub client
+- create automatically a draft release version using [gh client](https://cli.github.com/)
 
-## HowTo release using Gren
-
+Example to create v6.0.1
 ```bash
-# provide PAT with permissions to create release on current repository
-export GREN_GITHUB_TOKEN=your_token_here
-pnpm i -g github-release-notes@latest
-
-git fetch --all && git pull
-# make a release vX with all history
-gren release --data-source=prs -t v2.2.2 --milestone-match=v2.2.2
-# overrides release vX with history from vX-1
-gren release --data-source=prs -t "v2.2.2..v2.2.1" --milestone-match="v2.2.2" --override
+gh release create v6.0.1 --draft --generate-notes
 ```
+
+this will make a new draft release. Verify it in [releases list](https://github.com/boly38/action-mongo-tools/releases)
+
+- ⚠️ the repository apply immutable releases since #8, so you can't modify a release once published
+- publish the release when ready
