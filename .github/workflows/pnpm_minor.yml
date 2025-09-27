@@ -14,23 +14,21 @@ jobs:
         node-version: [20.x]
 
     steps:
-      - name: SETUP - Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_ACTIONS_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v5
 
       # https://github.com/pnpm/action-setup
-      - name: SETUP - Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
+          # version from package.json
           run_install: false
 
-      - name: SETUP - Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: pnpm minor
         run: |

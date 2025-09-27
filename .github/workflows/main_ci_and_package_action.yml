@@ -9,7 +9,7 @@ on:
   # Triggers the workflow on push or pull request events but only for the prod branch
   push:
     branches:
-      - stable
+      - to-package
       - main
   pull_request:
     paths:
@@ -23,27 +23,27 @@ jobs:
       UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
       UMAMI_PASSWORD: ${{secrets.UMAMI_PASSWORD}}
       UMAMI_SITE_DOMAIN: ${{secrets.UMAMI_SITE_DOMAIN}}
-      MUST_BE_PACKAGED: ${{ github.ref == 'refs/heads/stable' || github.ref == 'refs/heads/main' }}
+      MUST_BE_PACKAGED: ${{ github.ref == 'refs/heads/to-package' }}
     strategy:
       matrix:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         node-version: [20.x]
     steps:
-      - name: SETUP - Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v5
 
       # https://github.com/pnpm/action-setup
-      - name: SETUP - Install pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
+          # version from package.json
           run_install: false
 
-      - name: SETUP - Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: SETUP - Install dependencies
         run: |
@@ -99,9 +99,14 @@ jobs:
         # nb: jq extracts from package.json using 'orphanBranch' as key
         # warn: dont target 'main' as orphan branch
 
-      - name: PACKAGE - BUILD - autonomous package Action with deps in dist/
+      - name: PACKAGE - BUILD - autonomous package Action with deps in dist/ and update last tag
         if: env.MUST_BE_PACKAGED == 'true'
-        run: ./.github/scripts/package.sh
+        run: |
+          ./.github/scripts/package.sh
+          git tag -d "last-${ORPHAN_BRANCH}" || true
+          git push origin ":refs/tags/last-${ORPHAN_BRANCH}" || true
+          git tag "last-${ORPHAN_BRANCH}"
+          git push origin "last-${ORPHAN_BRANCH}"
 
       - name: DEPLOY package - push dist/ on target orphan branch ${{ env.ORPHAN_BRANCH }}
         uses: peaceiris/actions-gh-pages@v4
