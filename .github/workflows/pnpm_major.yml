@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GH_ACTIONS_TOKEN }}
 
       # https://github.com/pnpm/action-setup
       - name: Setup pnpm
