@@ -86,9 +86,12 @@ cf. working sample: cf. [(full) daily yml](.github/workflows/cron_daily_umami_re
 
 **TIP**: if your umami server version is not compatible with current GithubActions, you could change
 `umami-server-2.17.0` keyword by one of
-the [current repository tags](https://github.com/boly38/action-umami-report/tags) with `umami-server-x.y` format.
+the [current repository branches](https://github.com/boly38/action-umami-report/branches) with `umami-server-x.y.z` format.
 
 # See also
+
+## Contribute
+- cf [CONTRIBUTING.md](./.github/CONTRIBUTING.md)
 
 ## Umami
 
