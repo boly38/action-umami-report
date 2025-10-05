@@ -71,6 +71,7 @@ jobs:
           fi
 
       - name: CHECK - pnpm audit and comment on PR
+        if: ${{ github.event.pull_request }}
         uses: JamesRobertWiseman/pnpm-audit@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
