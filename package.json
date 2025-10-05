@@ -1,7 +1,7 @@
 {
   "name": "action-umami-report",
   "description": "GitHub Action Umami Report - for a given period and time unit, use Umami API to produce report as file or output variables",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "type": "module",
   "private": false,
   "author": "Boly38 <boly38@gmail.com>",
