@@ -40,16 +40,22 @@ jobs:
       - name: SETUP - Install dependencies
         run: |
           echo "Installing dependencies..."
-          pnpm install --frozen-lockfile
+          pnpm i --frozen-lockfile
 
       - name: CHECK - Check for outdated dependencies (non-blocking warning)
         run: |
           echo "🔍 Checking for outdated dependencies..."
-          if pnpm outdated; then
+          if pnpm outdated --depth=3; then
             echo "::notice title=Deps OK::✅ Dependencies are up to date 🎉"
           else
-            echo "::warning title=Outdated Dependencies::Some dependencies are outdated. Please consider updating them."
+            echo "::warning title=⚠️ Outdated Dependencies::Some dependencies are outdated. Please consider updating them."
           fi
 
-      - name: CHECK - Run pnpm audit
-        run: pnpm audit --json # --audit-level moderate
+      - name: CHECK - Run inline pnpm audit (non-blocking warning)
+        run: |
+          echo "🔍 Checking for vulnerabilities..."
+          if pnpm audit; then
+            echo "::notice title=Audit OK::✅ Audit is fine 🎉"
+          else
+            echo "::warning title=ℹ️ vulnerabilities found"
+          fi

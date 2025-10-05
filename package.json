@@ -46,7 +46,6 @@
     "monthH": "node ./manual/manual_1m_hour.js",
     "prefetch": "node ./manual/manual_prefetch_beta.js",
     "showResults": "cat ./umami/umamiReport.txt",
-    "audit": "pnpm audit",
     "test": "mocha tests/*.test.js --timeout 10000",
     "ci-test": "c8 pnpm run test --timeout 10000",
     "tst": "echo windows %TST% test&& mocha --trace-warnings --exit --timeout 180000 --unhandled-rejections=strict tests/%TST%.test.js"
