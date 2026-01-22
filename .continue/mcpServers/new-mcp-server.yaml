@@ -1,0 +1,11 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  - name: Browser search
+    command: npx
+    args:
+      - "@playwright/mcp@latest"
+  - name: IntelliJ
+    type: sse
+    url: http://localhost:64342/sse

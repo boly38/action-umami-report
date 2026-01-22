@@ -1,44 +1,44 @@
 name: Create Umami report
-description: Produce an umamiReport and outputs from umami website last 24h period
+description: 'Produce Umami reports for Cloud & Hosted v3.x (stats, pageviews, events, sessions, URLs)'
 branding:
   icon: bar-chart
   color: green
 author: boly38
 inputs:
   umami-cloud-api-key:
-    description: (1) The umami CLOUD apiKey. If set, this masks input with "(2)" flag
+    description: '(1) Umami Cloud API Key (https://cloud.umami.is/api-keys). Mutually exclusive with (2).'
     required: false
   umami-server:
-    description: (2) The umami Hosted server instance.
+    description: '(2) Umami Hosted v3.x server URL (e.g. https://umami.example.com). Required for Hosted mode.'
     required: false
   umami-user:
-    description: (2) The umami Hosted server instance user
+    description: '(2) Umami Hosted username (default: admin). Required for Hosted mode.'
     required: false
   umami-password:
-    description: (2) The umami Hosted server instance password
+    description: '(2) Umami Hosted password. Required for Hosted mode.'
     required: false
   umami-site-domain:
-    description: The umami site domain name
+    description: 'Target website domain (e.g. www.example.com). Uses first site if not specified.'
     default: ''
     required: false
   umami-report-file:
-    description: The umami report file to produce (skipped if empty)
+    description: 'Report output filename (saved in ./umami/ directory). Skip file generation if empty.'
     required: false
     default: ''
   umami-report-content:
-    description: The umami report content to produce
+    description: 'Report sections (pipe-separated: pageviews|events|sessions|urls). Stats always included.'
     required: false
     default: 'pageviews|events|sessions|urls'
   umami-period:
-    description: The umami report period
+    description: 'Analysis period (1h, 24h, 7d, 1w, 30d, 1m). Default: 24h'
     required: false
     default: '24h'
   umami-unit:
-    description: The umami report unit
+    description: 'Time unit for period breakdown (hour, day). Default: hour'
     required: false
     default: 'hour'
   umami-tz:
-    description: The umami report Timezone
+    description: 'Timezone for report timestamps (e.g. America/Los_Angeles). Default: Europe/Paris'
     required: false
     default: 'Europe/Paris'
 runs:

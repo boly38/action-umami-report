@@ -1,7 +1,7 @@
 {
   "name": "action-umami-report",
   "description": "GitHub Action Umami Report - for a given period and time unit, use Umami API to produce report as file or output variables",
-  "version": "6.0.2",
+  "version": "7.0.0",
   "type": "module",
   "private": false,
   "author": "Boly38 <boly38@gmail.com>",
@@ -28,7 +28,7 @@
     "title": "action-umami-report",
     "years": [
       2022,
-      2025
+      2026
     ],
     "author": "Brice Vandeputte"
   },
@@ -54,13 +54,13 @@
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
     "axios": "^1.12.2",
-    "dayjs": "^1.11.13",
-    "umami-api-client": "^2.17.3"
+    "dayjs": "^1.11.19",
+    "umami-api-client": "3.0.3-beta.1"
   },
   "devDependencies": {
     "c8": "^10.1.3",
     "chai": "^5.2.0",
-    "mocha": "^11.1.0",
+    "mocha": "^11.7.5",
     "sinon": "^20.0.0"
   },
   "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",

@@ -1,8 +1,14 @@
 # action-umami-report
 
+⚠️ **Version 7.0.0** - **Breaking Change: Umami v3.x only**
+
 This [action](./action.yml) generates periodic umami reports into a given file, and action outputs.
 
-Accepted periods are: 1h, 1d, 1w, 1m.
+**Compatibility:**
+- ✅ **Umami v3.x** (Cloud & Hosted)
+- ❌ **Umami v2.x** - Use `v6.0.2` or earlier ([migration guide](#migration-from-v6-to-v7))
+
+Accepted periods are: 1h, 24h, 7d, 1w, 30d, 1m.
 
 ## Inputs
 
@@ -54,6 +60,8 @@ When an `umami-report-file` is set, the target file is written in `./umami/<umam
 
 ## Example usage
 
+### Umami Hosted (self-hosted v3.x)
+
 ```yaml
 jobs:
   umamiReport:
@@ -63,7 +71,7 @@ jobs:
     steps:
       - name: Create Umami report
         id: umamiReport
-        uses: boly38/action-umami-report@umami-server-2.17.0
+        uses: boly38/action-umami-report@v7
         with:
           umami-server: ${{secrets.UMAMI_SERVER}}
           umami-user: ${{secrets.UMAMI_USERNAME}}
@@ -72,21 +80,75 @@ jobs:
           umami-report-file: 'umamiReport.md'
 
       - name: Send report to discord if pageViews is positive
-        if: steps.umamiReportStep.outputs.pageViews != '0'
+        if: steps.umamiReport.outputs.pageViews != '0'
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.UMAMI_TO_DISCORD_WEBHOOK_URL }}
           username: "Umami report"
-          content: "${{ steps.umamiReportStep.outputs.umamiOneLineReport }}"
-          filename: "${{ steps.umamiReportStep.outputs.umamiReportFile }}"
-          # avatar-url: ..set user logo
+          content: "${{ steps.umamiReport.outputs.umamiOneLineReport }}"
+          filename: "${{ steps.umamiReport.outputs.umamiReportFile }}"
+```
+
+### Umami Cloud
+
+```yaml
+jobs:
+  umamiReport:
+    name: umami cloud report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create Umami report
+        id: umamiReport
+        uses: boly38/action-umami-report@v7
+        with:
+          umami-cloud-api-key: ${{secrets.UMAMI_CLOUD_API_KEY}}
+          umami-site-domain: ${{secrets.UMAMI_CLOUD_SITE_DOMAIN}}
+          umami-report-file: 'umamiReport.md'
 ```
 
 cf. working sample: cf. [(full) daily yml](.github/workflows/cron_daily_umami_report.yml) or [(min) weekly yml](.github/workflows/cron_weekly_umami_report.yml)
 
-**TIP**: if your umami server version is not compatible with current GithubActions, you could change
-`umami-server-2.17.0` keyword by one of
-the [current repository branches](https://github.com/boly38/action-umami-report/branches) with `umami-server-x.y.z` format.
+## Migration from v6 to v7
+
+### Breaking Changes
+
+**v7.0.0** drops support for **Umami v2.x** servers.
+
+| Version | Umami Support | Status |
+|---------|---------------|--------|
+| **v7.x** | **Umami v3.x only** | ✅ Current |
+| v6.x | Umami v2.x | ❌ EOL |
+
+### What changed?
+
+1. **`umami-api-client` upgraded** to v3.0.3 (Umami v3.x compatible)
+2. **API response structure** changed:
+   - `siteStats.pageviews.value` → `siteStats.pageviews` (direct number)
+   - `siteStats.pageviews.prev` → `siteStats.comparison.pageviews`
+   - Metrics type `"url"` → `"path"`
+3. **No code changes required** for users (inputs/outputs unchanged)
+
+### Migration steps
+
+**If using Umami v3.x** (✅ recommended):
+```yaml
+# Update your workflow
+- uses: boly38/action-umami-report@v7  # ← Change from v6 to v7
+```
+
+**If still using Umami v2.x** (⚠️ legacy):
+```yaml
+# Stay on v6 until you upgrade Umami server
+- uses: boly38/action-umami-report@v6.0.2
+```
+
+**Resources:**
+- [Umami v3 Release Notes](https://umami.is/blog/umami-v3)
+- [CHANGELOG.md](./CHANGELOG.md)
+- [Migration Issue](./.github/issue_umami_v3_compatibility.md)
+
+---
 
 # See also
 
