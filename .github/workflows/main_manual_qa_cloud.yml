@@ -24,7 +24,7 @@ jobs:
         uses: boly38/action-umami-report@main-version
         with:
           umami-cloud-api-key: ${{secrets.UMAMI_TEST_CLOUD_API_KEY}}
-          umami-site-domain: ${{secrets.UMAMI_TEST_CLOUD_DOMAIN}}
+          umami-site-domain: ${{secrets.UMAMI_TEST_CLOUD_SITE_DOMAIN}}
           umami-report-file: 'umamiReport.txt'
         env:
           UMAMI_CLIENT_TIMEOUT_MS: 5000

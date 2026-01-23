@@ -46,6 +46,7 @@ tst=1_sinon_cloud_umami pnpm tst
 ## HowTo locally test GitHub action
 
 * To run GitHub action workflow locally, cf [TESTING_ACTION](./TESTING_ACTION.md) 
+* For GitHub workflows configuration and required secrets, cf [workflows/README](./workflows/README.md) 
 
 
 
