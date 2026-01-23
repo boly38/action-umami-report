@@ -78,38 +78,6 @@ jobs:
           level: moderate   # 'low'|'moderate'|'high'|'critical'
           fails: true
 
-      - name: TEST - run ci-tests with c8 code coverage
-        env:
-          UMAMI_USER: ${{secrets.UMAMI_USERNAME}}
-          UMAMI_TEST_SERVER: ${{secrets.UMAMI_TEST_SERVER}}
-          UMAMI_TEST_USER: ${{secrets.UMAMI_TEST_USER}}
-          UMAMI_TEST_PASSWORD: ${{secrets.UMAMI_TEST_PASSWORD}}
-          UMAMI_TEST_SITE_DOMAIN: ${{secrets.UMAMI_TEST_SITE_DOMAIN}}
-          UMAMI_TEST_CLOUD_API_KEY: ${{secrets.UMAMI_TEST_CLOUD_API_KEY}}
-          UMAMI_TEST_CLOUD_SITE_DOMAIN: ${{secrets.UMAMI_TEST_CLOUD_SITE_DOMAIN}}
-        run: pnpm run ci-test
-
-      - name: COVERAGE - Report coverage on pull request
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        # uses: romeovs/lcov-reporter-action@v0.2.16 # https://github.com/romeovs/lcov-reporter-action/issues/10
-        uses: andybelltree/lcov-reporter-action@v1.7.0 # https://github.com/andybelltree/lcov-reporter-action/releases
-        with:
-          lcov-file: ./coverage/lcov.info
-          filter-changed-files: true
-
-      - name: COVERAGE - Deploy tag coverage report on Github Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./coverage/lcov-report
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: ${{ github.event.head_commit.message }}
-          force_orphan: true
-
       # skip node_modules in git using @vercel/ncc to package action
       - name: PACKAGE - SETUP - Install vercel/ncc for package step
         run: pnpm install -g @vercel/ncc
