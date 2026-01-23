@@ -1,4 +1,7 @@
-#Intellij
+# IDE Configuration
+# Exception: .continue/ is intentionally tracked as a best practice exception.
+# It contains generic, non-user-specific configuration useful for all contributors
+# using IntelliJ + Continue.dev (MCP servers, shared rules). No user-specific paths.
 .idea/
 *.iml
 
