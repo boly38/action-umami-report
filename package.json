@@ -73,9 +73,9 @@
   },
   "devDependencies": {
     "c8": "^10.1.3",
-    "chai": "^5.2.0",
+    "chai": "^6.2.2",
     "mocha": "^12.0.0-beta-5",
-    "sinon": "^20.0.0"
+    "sinon": "^21.0.1"
   },
   "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
   "orphanBranch": "umami-server-2.17.0"
