@@ -53,7 +53,7 @@
   "dependencies": {
     "@actions/core": "^2.0.2",
     "@actions/github": "^7.0.0",
-    "axios": "^1.12.2",
+    "axios": "^1.13.5",
     "dayjs": "^1.11.19",
     "umami-api-client": "3.0.3-beta.1"
   },
