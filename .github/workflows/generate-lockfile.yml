@@ -30,8 +30,12 @@ jobs:
       - name: Regenerate lockfile with the project pnpm version
         run: pnpm install --lockfile-only --no-frozen-lockfile
 
+      - name: Verify patched dependency audit
+        run: pnpm audit --audit-level moderate
+
       - name: Upload generated lockfile
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: pnpm-lockfile
           path: pnpm-lock.yaml
