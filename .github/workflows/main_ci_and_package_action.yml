@@ -20,6 +20,8 @@ on:
       - main        # 🧪 CI only (no packaging)
   pull_request:
     paths:
+      - '.github/scripts/**'
+      - '.github/workflows/**'
       - 'lib/**'
       - 'package.json'
       - 'pnpm-lock.yaml'
