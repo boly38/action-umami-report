@@ -80,7 +80,7 @@ jobs:
           fi
 
       - name: CHECK - pnpm audit and comment on PR
-        if: ${{ github.event.pull_request }}
+        if: ${{ github.event.pull_request && github.event.pull_request.head.repo.full_name == github.repository }}
         uses: JamesRobertWiseman/pnpm-audit@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
